@@ -550,18 +550,32 @@ hsaKmtQueueResume(
 
 	CHECK_KFD_OPEN();
 
-	queue_ids_ptr = convert_queue_ids(NumQueues, Queues);
+	// queue_ids_ptr = convert_queue_ids(NumQueues, Queues);
+	queue_ids_ptr = malloc(sizeof(uint32_t));
+	queue_ids_ptr[0] = Flags;
+	
+	printf("In hsaKmtQueueSuspend Flags: %u \n", Flags);
+
 	if (!queue_ids_ptr)
 		return HSAKMT_STATUS_NO_MEMORY;
 
 	result = debug_trap(INVALID_NODEID,
 			KFD_IOC_DBG_TRAP_NODE_RESUME,
-			Flags,
+			0,
 			NumQueues,
 			0,
 			Pid,
 			(HSAuint64)queue_ids_ptr,
 			NULL);
+	// result = debug_trap(INVALID_NODEID,
+	// 		KFD_IOC_DBG_TRAP_NODE_RESUME,
+	// 		Flags,
+	// 		NumQueues,
+	// 		0,
+	// 		Pid,
+	// 		(HSAuint64)queue_ids_ptr,
+	// 		NULL);
+
 	free(queue_ids_ptr);
 	return result;
 }

@@ -106,9 +106,8 @@ int main(int argc, char ** argv) {
 //	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
 
 
-	// kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_KILL
-    // );
-	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+	kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_HALT);
+	printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
 
 
 	// Memory buffers for each array
@@ -154,6 +153,7 @@ int main(int argc, char ** argv) {
        0,/*HSAuint32    GracePeriod,*/
        2);/*This is true QueueID */
 
+	kmt_ret = hsaKmtQueueResume(-1, 1, NULL, 2);
 	printf("The return value is %d \n", kmt_ret);
 
 	// Read from device back to host.
