@@ -106,9 +106,9 @@ int main(int argc, char ** argv) {
 //	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
 
 
-	kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_KILL
-    );
-	printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+	// kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_KILL
+    // );
+	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
 
 
 	// Memory buffers for each array
@@ -147,14 +147,14 @@ int main(int argc, char ** argv) {
 	printf("After clEnqueueNDRangeKernel \n");
 	fflush(stdout);
 
-//	kmt_ret = hsaKmtQueueSuspend(
- //       -1 ,/*HSAuint32    Pid,*/
- //       1 ,/*HSAuint32    NumQueues,*/
- //       NULL,/*HSA_QUEUEID *Queues,*/
- //       0,/*HSAuint32    GracePeriod,*/
-//        2);/*This is true QueueID */
+	kmt_ret = hsaKmtQueueSuspend(
+       -1 ,/*HSAuint32    Pid,*/
+       1 ,/*HSAuint32    NumQueues,*/
+       NULL,/*HSA_QUEUEID *Queues,*/
+       0,/*HSAuint32    GracePeriod,*/
+       2);/*This is true QueueID */
 
-	//printf("The return value is %d \n", kmt_ret);
+	printf("The return value is %d \n", kmt_ret);
 
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
