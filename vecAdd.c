@@ -106,6 +106,10 @@ int main(int argc, char ** argv) {
 //	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
 
 
+	kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_KILL
+    );
+	printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+
 
 	// Memory buffers for each array
 	cl_mem aMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
