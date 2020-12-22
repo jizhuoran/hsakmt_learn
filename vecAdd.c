@@ -110,7 +110,7 @@ int main(int argc, char ** argv) {
         1 ,/*HSAuint32    NumQueues,*/
         NULL,/*HSA_QUEUEID *Queues,*/
         10000,/*HSAuint32    GracePeriod,*/
-        3);/*This is true QueueID */
+        1);/*This is true QueueID */
 
 	printf("The return value is %d \n", kmt_ret);
 
