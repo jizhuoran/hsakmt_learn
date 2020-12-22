@@ -148,6 +148,7 @@ int main(int argc, char ** argv) {
 	fflush(stdout);
 
 
+	printf("Before half!!!");
 	HsaDbgWaveMessage msg = {0};
 	hsaKmtDbgWavefrontControl(1, HSA_DBG_WAVEOP_HALT, HSA_DBG_WAVEMODE_BROADCAST_PROCESS, 2, &msg);
 	printf("We halt it!!!");
