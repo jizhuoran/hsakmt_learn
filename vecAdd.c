@@ -133,8 +133,8 @@ int main(int argc, char ** argv) {
 	ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&bMemObj);	
 	ret = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&cMemObj);	
 
-	kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_HALT);
-	printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+	// kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_HALT);
+	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
 
 	fflush(stdout);
 	printf("Before clEnqueueNDRangeKernel \n");
@@ -147,19 +147,23 @@ int main(int argc, char ** argv) {
 	printf("After clEnqueueNDRangeKernel \n");
 	fflush(stdout);
 
-	kmt_ret = hsaKmtQueueSuspend(
-       -1 ,/*HSAuint32    Pid,*/
-       1 ,/*HSAuint32    NumQueues,*/
-       NULL,/*HSA_QUEUEID *Queues,*/
-       0,/*HSAuint32    GracePeriod,*/
-       2);/*This is true QueueID */
 
-	kmt_ret = hsaKmtQueueResume(-1, 1, NULL, 2);
-	printf("The return value is %d \n", kmt_ret);
+	HsaDbgWaveMessage msg = {0};
+	hsaKmtDbgWavefrontControl(1, HSA_DBG_WAVEOP_HALT, HSA_DBG_WAVEMODE_BROADCAST_PROCESS, 2, &msg);
+
+	// kmt_ret = hsaKmtQueueSuspend(
+    //    -1 ,/*HSAuint32    Pid,*/
+    //    1 ,/*HSAuint32    NumQueues,*/
+    //    NULL,/*HSA_QUEUEID *Queues,*/
+    //    0,/*HSAuint32    GracePeriod,*/
+    //    2);/*This is true QueueID */
+
+	// kmt_ret = hsaKmtQueueResume(-1, 1, NULL, 2);
+	// printf("The return value is %d \n", kmt_ret);
 
 
-	kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_NORMAL);
-	printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+	// kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_NORMAL);
+	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
 
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
