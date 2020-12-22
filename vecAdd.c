@@ -147,14 +147,14 @@ int main(int argc, char ** argv) {
 	printf("After clEnqueueNDRangeKernel \n");
 	fflush(stdout);
 
-	kmt_ret = hsaKmtQueueSuspend(
-        -1 ,/*HSAuint32    Pid,*/
-        1 ,/*HSAuint32    NumQueues,*/
-        NULL,/*HSA_QUEUEID *Queues,*/
-        0,/*HSAuint32    GracePeriod,*/
-        2);/*This is true QueueID */
+//	kmt_ret = hsaKmtQueueSuspend(
+ //       -1 ,/*HSAuint32    Pid,*/
+ //       1 ,/*HSAuint32    NumQueues,*/
+ //       NULL,/*HSA_QUEUEID *Queues,*/
+ //       0,/*HSAuint32    GracePeriod,*/
+//        2);/*This is true QueueID */
 
-	printf("The return value is %d \n", kmt_ret);
+	//printf("The return value is %d \n", kmt_ret);
 
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
