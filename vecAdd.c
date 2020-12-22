@@ -27,7 +27,7 @@ Sources: http://www.eriksmistad.no/getting-started-with-opencl-and-gpu-computing
 
 int main(int argc, char ** argv) {
 
-	int SIZE = 1024;
+	int SIZE = 1024*1024*512;
 
 	// Allocate memories for input arrays and output array.
 	float *A = (float*)malloc(sizeof(float)*SIZE);
@@ -102,8 +102,8 @@ int main(int argc, char ** argv) {
 	kmt_ret = hsaKmtEnableDebugTrap(1, INVALID_QUEUEID);
 	printf("The return value of hsaKmtEnableDebugTrap is %d \n", kmt_ret);
 
-	kmt_ret = hsaKmtDisableDebugTrap(1);
-	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
+//	kmt_ret = hsaKmtDisableDebugTrap(1);
+//	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
 
 
 
@@ -147,8 +147,8 @@ int main(int argc, char ** argv) {
         -1 ,/*HSAuint32    Pid,*/
         1 ,/*HSAuint32    NumQueues,*/
         NULL,/*HSA_QUEUEID *Queues,*/
-        10000,/*HSAuint32    GracePeriod,*/
-        1);/*This is true QueueID */
+        0,/*HSAuint32    GracePeriod,*/
+        2);/*This is true QueueID */
 
 	printf("The return value is %d \n", kmt_ret);
 
