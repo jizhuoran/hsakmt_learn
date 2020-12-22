@@ -150,7 +150,9 @@ int main(int argc, char ** argv) {
 
 	HsaDbgWaveMessage msg = {0};
 	hsaKmtDbgWavefrontControl(1, HSA_DBG_WAVEOP_HALT, HSA_DBG_WAVEMODE_BROADCAST_PROCESS, 2, &msg);
-
+	printf("We halt it!!!");
+	printf("We halt it!!!");
+	printf("We halt it!!!");
 	// kmt_ret = hsaKmtQueueSuspend(
     //    -1 ,/*HSAuint32    Pid,*/
     //    1 ,/*HSAuint32    NumQueues,*/
@@ -167,6 +169,7 @@ int main(int argc, char ** argv) {
 
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
+	printf("So no this line!!!");
 
 	// Write result
 	/*
