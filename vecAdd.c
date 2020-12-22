@@ -105,14 +105,7 @@ int main(int argc, char ** argv) {
 	kmt_ret = hsaKmtDisableDebugTrap(1);
 	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
 
-	kmt_ret = hsaKmtQueueSuspend(
-        -1 ,/*HSAuint32    Pid,*/
-        1 ,/*HSAuint32    NumQueues,*/
-        NULL,/*HSA_QUEUEID *Queues,*/
-        10000,/*HSAuint32    GracePeriod,*/
-        1);/*This is true QueueID */
 
-	printf("The return value is %d \n", kmt_ret);
 
 	// Memory buffers for each array
 	cl_mem aMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
@@ -139,11 +132,25 @@ int main(int argc, char ** argv) {
 	ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&bMemObj);	
 	ret = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&cMemObj);	
 
-
+	fflush(stdout);
+	printf("Before clEnqueueNDRangeKernel \n");
+	fflush(stdout);
 	// Execute the kernel
 	size_t globalItemSize = SIZE;
 	size_t localItemSize = 64; // globalItemSize has to be a multiple of localItemSize. 1024/64 = 16 
 	ret = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalItemSize, &localItemSize, 0, NULL, NULL);	
+	fflush(stdout);
+	printf("After clEnqueueNDRangeKernel \n");
+	fflush(stdout);
+
+	kmt_ret = hsaKmtQueueSuspend(
+        -1 ,/*HSAuint32    Pid,*/
+        1 ,/*HSAuint32    NumQueues,*/
+        NULL,/*HSA_QUEUEID *Queues,*/
+        10000,/*HSAuint32    GracePeriod,*/
+        1);/*This is true QueueID */
+
+	printf("The return value is %d \n", kmt_ret);
 
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
