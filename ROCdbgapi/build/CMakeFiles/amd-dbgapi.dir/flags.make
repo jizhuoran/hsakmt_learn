@@ -8,5 +8,5 @@ CXX_INCLUDES = -I/home/zrji/hsakmt_learn/ROCdbgapi/build/include -isystem /opt/r
 
 CXX_FLAGS = -O3 -DNDEBUG -fPIC -Werror -Wall -fno-rtti -Wno-attributes -fvisibility=hidden -pthread -std=c++1z
 
-# Custom defines: CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o_DEFINES = AMD_DBGAPI_VERSION_PATCH=0;AMD_DBGAPI_BUILD_INFO="0.42.0-developer-build-20201223T163531-zrji-git-fef70cd"
+# Custom defines: CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o_DEFINES = AMD_DBGAPI_VERSION_PATCH=0;AMD_DBGAPI_BUILD_INFO="0.42.0-developer-build-20201223T170103-zrji-git-b2e883e"
 

@@ -287,15 +287,15 @@ CMakeFiles/amd-dbgapi.dir/src/utils.cpp.s: cmake_force
 CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o: CMakeFiles/amd-dbgapi.dir/flags.make
 CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o: ../src/versioning.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) -DAMD_DBGAPI_BUILD_INFO=\"0.42.0-developer-build-20201223T163531-zrji-git-fef70cd\" -DAMD_DBGAPI_VERSION_PATCH=0 $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o -c /home/zrji/hsakmt_learn/ROCdbgapi/src/versioning.cpp
+	/usr/bin/c++ $(CXX_DEFINES) -DAMD_DBGAPI_BUILD_INFO=\"0.42.0-developer-build-20201223T170103-zrji-git-b2e883e\" -DAMD_DBGAPI_VERSION_PATCH=0 $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o -c /home/zrji/hsakmt_learn/ROCdbgapi/src/versioning.cpp
 
 CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) -DAMD_DBGAPI_BUILD_INFO=\"0.42.0-developer-build-20201223T163531-zrji-git-fef70cd\" -DAMD_DBGAPI_VERSION_PATCH=0 $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zrji/hsakmt_learn/ROCdbgapi/src/versioning.cpp > CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) -DAMD_DBGAPI_BUILD_INFO=\"0.42.0-developer-build-20201223T170103-zrji-git-b2e883e\" -DAMD_DBGAPI_VERSION_PATCH=0 $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zrji/hsakmt_learn/ROCdbgapi/src/versioning.cpp > CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.i
 
 CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) -DAMD_DBGAPI_BUILD_INFO=\"0.42.0-developer-build-20201223T163531-zrji-git-fef70cd\" -DAMD_DBGAPI_VERSION_PATCH=0 $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zrji/hsakmt_learn/ROCdbgapi/src/versioning.cpp -o CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) -DAMD_DBGAPI_BUILD_INFO=\"0.42.0-developer-build-20201223T170103-zrji-git-b2e883e\" -DAMD_DBGAPI_VERSION_PATCH=0 $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zrji/hsakmt_learn/ROCdbgapi/src/versioning.cpp -o CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.s
 
 CMakeFiles/amd-dbgapi.dir/src/watchpoint.cpp.o: CMakeFiles/amd-dbgapi.dir/flags.make
 CMakeFiles/amd-dbgapi.dir/src/watchpoint.cpp.o: ../src/watchpoint.cpp

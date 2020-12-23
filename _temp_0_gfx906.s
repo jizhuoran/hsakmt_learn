@@ -12,29 +12,30 @@ addVectors$local:
 	s_load_dword s6, s[6:7], 0x18
 	s_load_dword s4, s[4:5], 0x4
 	s_waitcnt lgkmcnt(0)
-	v_mov_b32_e32 v4, s13
+	v_mov_b32_e32 v4, s1
+	v_mov_b32_e32 v2, s13
+	v_mov_b32_e32 v7, s3
 	s_and_b32 s4, s4, 0xffff
 	s_mul_i32 s8, s8, s4
 	s_add_i32 s6, s6, s8
 	v_add_u32_e32 v1, s6, v0
 	v_mov_b32_e32 v0, 0
-	v_ashrrev_i64 v[1:2], 30, v[0:1]
-	v_add_co_u32_e32 v3, vcc, s12, v1
-	v_addc_co_u32_e32 v4, vcc, v4, v2, vcc
-	global_store_dword v[3:4], v0, off
-	v_mov_b32_e32 v0, s1
-	v_add_co_u32_e32 v5, vcc, s0, v1
-	v_addc_co_u32_e32 v6, vcc, v0, v2, vcc
-	global_load_dword v5, v[5:6], off
-	v_mov_b32_e32 v6, s3
-	v_add_co_u32_e32 v0, vcc, s2, v1
-	v_addc_co_u32_e32 v1, vcc, v6, v2, vcc
-	global_load_dword v0, v[0:1], off
+	v_ashrrev_i64 v[5:6], 30, v[0:1]
+	v_add_co_u32_e32 v1, vcc, s12, v5
+	v_addc_co_u32_e32 v2, vcc, v2, v6, vcc
+	v_add_co_u32_e32 v3, vcc, s0, v5
+	v_addc_co_u32_e32 v4, vcc, v4, v6, vcc
+	v_add_co_u32_e32 v5, vcc, s2, v5
+	v_addc_co_u32_e32 v6, vcc, v7, v6, vcc
+	global_store_dword v[1:2], v0, off
+BB0_1:                                  ; =>This Inner Loop Header: Depth=1
+	global_load_dword v7, v[3:4], off
+	global_load_dword v8, v[5:6], off
 	s_waitcnt vmcnt(0)
-	v_add_f32_e32 v0, v5, v0
-	v_add_f32_e32 v0, 0, v0
-	global_store_dword v[3:4], v0, off
-	s_endpgm
+	v_add_f32_e32 v7, v7, v8
+	v_add_f32_e32 v0, v0, v7
+	global_store_dword v[1:2], v0, off
+	s_branch BB0_1
 	.section	.rodata,#alloc
 	.p2align	6
 	.amdhsa_kernel addVectors
@@ -53,7 +54,7 @@ addVectors$local:
 		.amdhsa_system_sgpr_workgroup_id_z 0
 		.amdhsa_system_sgpr_workgroup_info 0
 		.amdhsa_system_vgpr_workitem_id 0
-		.amdhsa_next_free_vgpr 7
+		.amdhsa_next_free_vgpr 9
 		.amdhsa_next_free_sgpr 16
 		.amdhsa_reserve_flat_scratch 0
 		.amdhsa_float_round_mode_32 0
@@ -79,16 +80,16 @@ addVectors$local:
 ; Kernel info:
 ; codeLenInByte = 152
 ; NumSgprs: 18
-; NumVgprs: 7
+; NumVgprs: 9
 ; ScratchSize: 0
 ; MemoryBound: 0
 ; FloatMode: 240
 ; IeeeMode: 1
 ; LDSByteSize: 0 bytes/workgroup (compile time only)
 ; SGPRBlocks: 2
-; VGPRBlocks: 1
+; VGPRBlocks: 2
 ; NumSGPRsForWavesPerEU: 18
-; NumVGPRsForWavesPerEU: 7
+; NumVGPRsForWavesPerEU: 9
 ; Occupancy: 10
 ; WaveLimiterHint : 1
 ; COMPUTE_PGM_RSRC2:USER_SGPR: 8
@@ -160,7 +161,7 @@ amdhsa.kernels:
     .sgpr_count:     18
     .sgpr_spill_count: 0
     .symbol:         addVectors.kd
-    .vgpr_count:     7
+    .vgpr_count:     9
     .vgpr_spill_count: 0
     .wavefront_size: 64
 amdhsa.version:
