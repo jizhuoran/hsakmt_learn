@@ -4,7 +4,7 @@ __kernel void addVectors(__global float *a,
 		
 		int gid = get_global_id(0);
 		c[gid] = 0;
-		for(int i = 0; i < 1; ++i) {
+		while(true) {
 			c[gid] += (a[gid] + b[gid]);
 		}
 	}
