@@ -178,9 +178,9 @@ int main(int argc, char ** argv) {
 	// Creating command queue
 	cl_command_queue commandQueue = clCreateCommandQueue(context, deviceID, 0, &ret);
 
-	HsaVersionInfo VersionInfo;
-	HSAKMT_STATUS kmt_ret = hsaKmtGetVersion(&VersionInfo);
-	printf("The return value of hsaKmtGetVersion is %d \n", kmt_ret);
+	// HsaVersionInfo VersionInfo;
+	// HSAKMT_STATUS kmt_ret = hsaKmtGetVersion(&VersionInfo);
+	// printf("The return value of hsaKmtGetVersion is %d \n", kmt_ret);
 	
 	// printf("VersionInfo %u %u \n", VersionInfo.KernelInterfaceMajorVersion, VersionInfo.KernelInterfaceMinorVersion);
 
@@ -199,11 +199,11 @@ int main(int argc, char ** argv) {
 
 
 
-	kmt_ret = hsaKmtEnableDebugTrap(1, INVALID_QUEUEID);
-	printf("The return value of hsaKmtEnableDebugTrap is %d \n", kmt_ret);
+	// kmt_ret = hsaKmtEnableDebugTrap(1, INVALID_QUEUEID);
+	// printf("The return value of hsaKmtEnableDebugTrap is %d \n", kmt_ret);
 
-	kmt_ret = hsaKmtDbgRegister(1);
-	printf("The return value of hsaKmtDbgRegister is %d \n", kmt_ret);
+	// kmt_ret = hsaKmtDbgRegister(1);
+	// printf("The return value of hsaKmtDbgRegister is %d \n", kmt_ret);
 
 //	kmt_ret = hsaKmtDisableDebugTrap(1);
 //	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
@@ -238,8 +238,8 @@ int main(int argc, char ** argv) {
 	ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&bMemObj);	
 	ret = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&cMemObj);	
 
-	kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_HALT);
-	printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+	// kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_HALT);
+	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
 
 
 	HsaDbgWaveMsgAMDGen2 wavemsggen2;
@@ -303,17 +303,37 @@ int main(int argc, char ** argv) {
 	dbg_ret = amd_dbgapi_wave_stop (waves[0]);
 	printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
 
-	amd_dbgapi_global_address_t value;
+	amd_dbgapi_global_address_t PC;
 	dbg_ret = amd_dbgapi_wave_get_info (
 		waves[0],
         AMD_DBGAPI_WAVE_INFO_PC, 
 		sizeof(amd_dbgapi_global_address_t),
-        &value);
+        &PC);
 
-	std::cout << "The return value of amd_dbgapi_wave_get_info is "
-		<< dbg_ret << " the value is " << std::hex << value << std::endl;
+	std::cout << "The return of amd_dbgapi_wave_get_info is "
+		<< dbg_ret << " the PC is " << std::hex << PC << std::endl;
 
+	amd_dbgapi_global_address_t archid;
+	dbg_ret = amd_dbgapi_wave_get_info (
+		waves[0],
+        AMD_DBGAPI_WAVE_INFO_PC, 
+		sizeof(amd_dbgapi_global_address_t),
+        &archid);
+
+	std::cout << "The return archid of amd_dbgapi_wave_get_info is "
+		<< dbg_ret << " the arch is " << std::hex << archid << std::endl;
+
+
+	// void* memorydecode = malloc(1024);
+	// char* instruction_text;
+	// amd_dbgapi_size_t size = 16;
 	
+	// dbg_ret = amd_dbgapi_disassemble_instruction (
+    // 	amd_dbgapi_architecture_id_t architecture_id,
+    // 	value, size,
+    // 	memorydecode, &instruction_text,
+    // 	NULL, NULL);
+	// printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
 
 	// hsaKmtDbgWavefrontControl(1, HSA_DBG_WAVEOP_KILL, HSA_DBG_WAVEMODE_BROADCAST_PROCESS, 1, &msg);
 
@@ -335,6 +355,8 @@ int main(int argc, char ** argv) {
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
 	printf("So no this line!!!");
+
+	// amd_dbgapi_disassemble_instruction
 
 	// Write result
 	/*
