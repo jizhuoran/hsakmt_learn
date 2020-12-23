@@ -154,9 +154,9 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
           amd_dbgapi_shared_library_id_t library_id, const char *symbol_name,
           amd_dbgapi_global_address_t *address) {
 		std::cout << "Call get_symbol_address" << std::endl;
-        // *address = reinterpret_cast<amd_dbgapi_global_address_t> (
-            // dlsym (RTLD_DEFAULT, symbol_name));
-        return AMD_DBGAPI_STATUS_ERROR;
+        *address = reinterpret_cast<amd_dbgapi_global_address_t> (
+            dlsym (RTLD_DEFAULT, symbol_name));
+        return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
   /* set_breakpoint callback.  */
