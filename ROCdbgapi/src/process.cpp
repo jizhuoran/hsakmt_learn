@@ -1343,14 +1343,13 @@ process_t::attach ()
 
     /* Check the r_version.  */
     int r_version;
-    // status = read_global_memory (m_r_debug_address
-    //                                  + offsetof (struct r_debug, r_version),
-    //                              &r_version, sizeof (r_version));
-    // if (status != AMD_DBGAPI_STATUS_SUCCESS)
-    //   error ("read_global_memory failed (rc=%d)", status);
+    status = read_global_memory (m_r_debug_address
+                                     + offsetof (struct r_debug, r_version),
+                                 &r_version, sizeof (r_version));
+    if (status != AMD_DBGAPI_STATUS_SUCCESS)
+      error ("read_global_memory failed (rc=%d)", status);
   
     std::cout << "on_runtime_load_callback 4" << std::endl;
-    r_version = ROCR_RDEBUG_VERSION; // UGLY
 
     if (r_version != ROCR_RDEBUG_VERSION)
       {

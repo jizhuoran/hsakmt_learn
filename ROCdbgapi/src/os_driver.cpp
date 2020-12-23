@@ -101,20 +101,30 @@ linux_driver_t::xfer_global_memory_partial (
     amd_dbgapi_global_address_t address, void *read, const void *write,
     size_t *size) const
 {
-  std::cout << "Come to this function xfer_global_memory_partial" << std::endl;
+  std::cout << "Come to this function xfer_global_memory_partial 1" << std::endl;
   dbgapi_assert (!read != !write && "either read or write buffer");
+  std::cout << "Come to this function xfer_global_memory_partial 2" << std::endl;
   dbgapi_assert (is_valid ());
+
+  std::cout << "Come to this function xfer_global_memory_partial 3" << std::endl;
 
   ssize_t ret = read ? pread (*m_proc_mem_fd, read, *size, address)
                      : pwrite (*m_proc_mem_fd, write, *size, address);
+  std::cout << "Come to this function xfer_global_memory_partial 4" << std::endl;
 
   if (ret < 0 && errno != EIO && errno != EINVAL)
     warning ("process_t::xfer_memory failed: %s", strerror (errno));
 
-  if (ret < 0 || (ret == 0 && *size != 0))
+  std::cout << "Come to this function xfer_global_memory_partial 5" << std::endl;
+
+  if (ret < 0 || (ret == 0 && *size != 0)) {
+    std::cout << "Come to this function xfer_global_memory_partial 61" << std::endl;
     return AMD_DBGAPI_STATUS_ERROR_MEMORY_ACCESS;
+
+  }
   else
     {
+      std::cout << "Come to this function xfer_global_memory_partial 62" << std::endl;
       *size = ret;
       return AMD_DBGAPI_STATUS_SUCCESS;
     }
