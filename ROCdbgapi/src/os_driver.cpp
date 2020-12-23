@@ -101,12 +101,12 @@ linux_driver_t::xfer_global_memory_partial (
     amd_dbgapi_global_address_t address, void *read, const void *write,
     size_t *size) const
 {
-  std::cout << "Come to this function xfer_global_memory_partial 1" << std::endl;
+  std::cout << "Come to this function xfer_global_memory_partial 1 is valid" << is_valid << << std::endl;
   dbgapi_assert (!read != !write && "either read or write buffer");
   std::cout << "Come to this function xfer_global_memory_partial 2" << std::endl;
   dbgapi_assert (is_valid ());
 
-  std::cout << "Come to this function xfer_global_memory_partial 3" << std::endl;
+  std::cout << "Come to this function xfer_global_memory_partial 3 address: " << address << std::endl;
 
   ssize_t ret = read ? pread (*m_proc_mem_fd, read, *size, address)
                      : pwrite (*m_proc_mem_fd, write, *size, address);
