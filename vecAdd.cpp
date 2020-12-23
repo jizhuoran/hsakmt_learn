@@ -71,9 +71,9 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
 		printf("************ Call enable_notify_shared_library ! \n");
 
 		std::cout << "The loaded address beforebefore " << (void*) library_id.handle << std::endl;
-		dlopen(library_name, RTLD_NOW);
+		void* address = dlopen(library_name, RTLD_NOW);
         *library_state = AMD_DBGAPI_SHARED_LIBRARY_STATE_LOADED;
-		std::cout << "The loaded address is " << (void*) library_id.handle << std::endl;
+		std::cout << "The loaded address is " << address << std::endl;
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
@@ -92,7 +92,7 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
           amd_dbgapi_global_address_t *address) {
         *address = reinterpret_cast<amd_dbgapi_global_address_t> (
             dlsym (RTLD_DEFAULT, symbol_name));
-		std::cout << "Call get_symbol_address " << address << std::endl;
+		std::cout << "Call get_symbol_address " << *address << std::endl;
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
