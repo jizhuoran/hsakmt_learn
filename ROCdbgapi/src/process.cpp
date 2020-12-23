@@ -1339,7 +1339,7 @@ process_t::attach ()
         != AMD_DBGAPI_STATUS_SUCCESS)
       error ("Cannot find symbol `%s'", amdgpu_r_debug_symbol_name);
 
-    std::cout << "on_runtime_load_callback 3" << std::endl;
+    std::cout << "on_runtime_load_callback 3, the offset is " << offsetof (struct r_debug, r_version) << std::endl;
 
     /* Check the r_version.  */
     int r_version;
