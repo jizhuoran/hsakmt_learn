@@ -1351,16 +1351,17 @@ process_t::attach ()
   
     std::cout << "on_runtime_load_callback 4" << std::endl;
 
-    if (r_version != ROCR_RDEBUG_VERSION)
-      {
-        warning ("%s: AMD GPU runtime _amdgpu_r_debug.r_version %d "
-                 "does not match %d requirement",
-                 library.name ().c_str (), r_version, ROCR_RDEBUG_VERSION);
-        enqueue_event (create<event_t> (
-            *this, AMD_DBGAPI_EVENT_KIND_RUNTIME,
-            AMD_DBGAPI_RUNTIME_STATE_LOADED_ERROR_RESTRICTION));
-        return;
-      }
+    // if (r_version != ROCR_RDEBUG_VERSION)
+    //   {
+    //     warning ("%s: AMD GPU runtime _amdgpu_r_debug.r_version %d "
+    //              "does not match %d requirement",
+    //              library.name ().c_str (), r_version, ROCR_RDEBUG_VERSION);
+    //     enqueue_event (create<event_t> (
+    //         *this, AMD_DBGAPI_EVENT_KIND_RUNTIME,
+    //         AMD_DBGAPI_RUNTIME_STATE_LOADED_ERROR_RESTRICTION));
+    //     return;
+    //   }
+    r_version = ROCR_RDEBUG_VERSION; // UGLY
     std::cout << "on_runtime_load_callback 5" << std::endl;
 
     /* Install a breakpoint at _amd_r_debug.r_brk.  The runtime calls this
