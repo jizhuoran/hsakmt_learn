@@ -1,0 +1,9 @@
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/install/strip.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/install/local.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/edit_cache.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/install.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/list_install_components.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/rebuild_cache.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/package.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/package_source.dir
+/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir
