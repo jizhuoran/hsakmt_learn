@@ -94,7 +94,7 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
           amd_dbgapi_shared_library_id_t library_id, const char *symbol_name,
           amd_dbgapi_global_address_t *address) {
         *address = reinterpret_cast<amd_dbgapi_global_address_t> (
-            dlsym (handle2address[library_id.handl], symbol_name));
+            dlsym (handle2address[library_id.handle], symbol_name));
 		std::cout << "Call get_symbol_address " << "li is " << library_id.handle << " ret is " << *address << std::endl;
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
