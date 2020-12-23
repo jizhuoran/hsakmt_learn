@@ -43,6 +43,8 @@ shared_library_t::shared_library_t (amd_dbgapi_shared_library_id_t library_id,
 {
   amd_dbgapi_shared_library_state_t state;
 
+  std::cout << "Before we doing so, we have " << library_id.handle << std::endl;
+
   if (m_process.enable_notify_shared_library (m_name.c_str (), library_id,
                                               &state)
       != AMD_DBGAPI_STATUS_SUCCESS)
