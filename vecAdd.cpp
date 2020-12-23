@@ -303,7 +303,7 @@ int main(int argc, char ** argv) {
 
 	amd_dbgapi_global_address_t value;
 	dbg_ret = amd_dbgapi_wave_get_info (
-		AMD_DBGAPI_WAVE_NONE,
+		waves[0],
         AMD_DBGAPI_WAVE_INFO_PC, 
 		sizeof(amd_dbgapi_global_address_t),
         &value);

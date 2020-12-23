@@ -328,13 +328,13 @@ public:
 
   template <typename Functor> Object *find_if (Functor predicate)
   {
-    std::cout << "So we are in this function 222 ? " << m_map.size() << std::endl;
+    // std::cout << "So we are in this function 222 ? " << m_map.size() << std::endl;
     auto it
         = std::find_if (m_map.begin (), m_map.end (), [=] (const auto &value) {
             return bool{ is_valid (value.second) && predicate (value.second) };
           });
     
-    std::cout << "I think no error until now!" << m_map.size() << std::endl;
+    // std::cout << "I think no error until now!" << m_map.size() << std::endl;
     return (it != m_map.end ()) ? &it->second : nullptr;
   }
 
