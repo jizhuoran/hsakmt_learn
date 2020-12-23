@@ -272,6 +272,7 @@ int main(int argc, char ** argv) {
 
 
 
+
 	// Memory buffers for each array
 	cl_mem aMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
 	cl_mem bMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
