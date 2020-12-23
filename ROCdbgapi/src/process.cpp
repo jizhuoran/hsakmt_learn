@@ -1339,6 +1339,8 @@ process_t::attach ()
         != AMD_DBGAPI_STATUS_SUCCESS)
       error ("Cannot find symbol `%s'", amdgpu_r_debug_symbol_name);
 
+    std::cout << "on_runtime_load_callback 3" << std::endl;
+
     /* Check the r_version.  */
     int r_version;
     status = read_global_memory (m_r_debug_address
@@ -1346,6 +1348,8 @@ process_t::attach ()
                                  &r_version, sizeof (r_version));
     if (status != AMD_DBGAPI_STATUS_SUCCESS)
       error ("read_global_memory failed (rc=%d)", status);
+  
+    std::cout << "on_runtime_load_callback 4" << std::endl;
 
     if (r_version != ROCR_RDEBUG_VERSION)
       {
@@ -1357,6 +1361,7 @@ process_t::attach ()
             AMD_DBGAPI_RUNTIME_STATE_LOADED_ERROR_RESTRICTION));
         return;
       }
+    std::cout << "on_runtime_load_callback 5" << std::endl;
 
     /* Install a breakpoint at _amd_r_debug.r_brk.  The runtime calls this
        function before updating the code object list, and after completing
@@ -1368,6 +1373,8 @@ process_t::attach ()
                                  &r_brk_address, sizeof (r_brk_address));
     if (status != AMD_DBGAPI_STATUS_SUCCESS)
       error ("read_global_memory failed (rc=%d)", status);
+    
+    std::cout << "on_runtime_load_callback 6" << std::endl;
 
     /* This function gets called when the client reports that the breakpoint
        has been hit.  */
