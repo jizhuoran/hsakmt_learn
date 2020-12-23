@@ -118,7 +118,7 @@ linux_driver_t::xfer_global_memory_partial (
   std::cout << "Come to this function xfer_global_memory_partial 5" << std::endl;
 
   if (ret < 0 || (ret == 0 && *size != 0)) {
-    std::cout << "Come to this function xfer_global_memory_partial 61" << std::endl;
+    std::cout << "Come to this function xfer_global_memory_partial 61: ret is " << ret << " other is " << (ret == 0 && *size != 0) << std::endl;
     return AMD_DBGAPI_STATUS_ERROR_MEMORY_ACCESS;
 
   }
