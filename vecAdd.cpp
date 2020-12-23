@@ -300,6 +300,8 @@ int main(int argc, char ** argv) {
 
 	printf("The return value of amd_dbgapi_process_wave_list is %d and the value is %lu \n", dbg_ret, wave_count);
 
+	dbg_ret = amd_dbgapi_wave_stop (waves[0]);
+	printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
 
 	amd_dbgapi_global_address_t value;
 	dbg_ret = amd_dbgapi_wave_get_info (
