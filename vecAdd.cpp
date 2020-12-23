@@ -40,71 +40,6 @@ void print_trace(void) {
 }
 
 
-void* allocate_memory(size_t byte_size) {
-	printf("************ Call allocate_memory ! \n");
-	return malloc(byte_size);
-}
-
-void deallocate_memory(void *data) {
-	printf("************ Call deallocate_memory ! \n");
-	return;
-}
-
-amd_dbgapi_status_t get_os_pid (
-		amd_dbgapi_client_process_id_t client_process_id,
-		amd_dbgapi_os_process_id_t *os_pid) {
-	*os_pid = getpid();
-	printf("************ Call get_os_pid ! \n");
-	return AMD_DBGAPI_STATUS_SUCCESS;
-}
-
-amd_dbgapi_status_t enable_notify_shared_library (
-      amd_dbgapi_client_process_id_t client_process_id,
-      const char *shared_library_name,
-      amd_dbgapi_shared_library_id_t shared_library_id,
-      amd_dbgapi_shared_library_state_t *shared_library_state) {
-	
-	print_trace();
-	printf("************ Call enable_notify_shared_library ! \n");
-	return AMD_DBGAPI_STATUS_ERROR;
-}
-
-amd_dbgapi_status_t disable_notify_shared_library (
-      amd_dbgapi_client_process_id_t client_process_id,
-      amd_dbgapi_shared_library_id_t shared_library_id) {
-	print_trace();
-	printf("************ Call disable_notify_shared_library ! \n");
-	return AMD_DBGAPI_STATUS_ERROR;
-}
-
-amd_dbgapi_status_t get_symbol_address (
-      amd_dbgapi_client_process_id_t client_process_id,
-      amd_dbgapi_shared_library_id_t shared_library_id,
-      const char *symbol_name, amd_dbgapi_global_address_t *address) {
-	printf("************ Call get_symbol_address ! \n");
-	return AMD_DBGAPI_STATUS_ERROR;
-}
-
-amd_dbgapi_status_t insert_breakpoint (
-      amd_dbgapi_client_process_id_t client_process_id,
-      amd_dbgapi_shared_library_id_t shared_library_id,
-      amd_dbgapi_global_address_t address,
-      amd_dbgapi_breakpoint_id_t breakpoint_id) {
-	printf("************ Call insert_breakpoint ! \n");
-	return AMD_DBGAPI_STATUS_ERROR;
-}
-
-amd_dbgapi_status_t remove_breakpoint (
-      amd_dbgapi_client_process_id_t client_process_id,
-      amd_dbgapi_breakpoint_id_t breakpoint_id) {
-	printf("************ Call remove_breakpoint ! \n");
-	return AMD_DBGAPI_STATUS_ERROR;
-}
-
-void log_message (amd_dbgapi_log_level_t level, const char *message) {
-	printf("************ Call log_message ! \n");
-	return;
-}
 
 struct amd_dbgapi_client_process_s
 {
@@ -155,9 +90,9 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
       [] (amd_dbgapi_client_process_id_t client_process_id,
           amd_dbgapi_shared_library_id_t library_id, const char *symbol_name,
           amd_dbgapi_global_address_t *address) {
-		std::cout << "Call get_symbol_address" << std::endl;
         *address = reinterpret_cast<amd_dbgapi_global_address_t> (
             dlsym (RTLD_DEFAULT, symbol_name));
+		std::cout << "Call get_symbol_address " << address << std::endl;
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
