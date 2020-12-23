@@ -73,7 +73,7 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
 		std::cout << "The loaded address beforebefore " << (void*) library_id.handle << std::endl;
 		library_id.handle = (uint64_t)dlopen(library_name, RTLD_NOW);
         *library_state = AMD_DBGAPI_SHARED_LIBRARY_STATE_LOADED;
-		std::cout << "The loaded address is " << address << std::endl;
+		std::cout << "The loaded address is " << std::hex << library_id.handle  << std::endl;
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
