@@ -310,7 +310,8 @@ int main(int argc, char ** argv) {
 		sizeof(amd_dbgapi_global_address_t),
         &value);
 
-	printf("The return value of amd_dbgapi_wave_get_info is %d and the value is %lu \n", dbg_ret, value);
+	std::cout << "The return value of amd_dbgapi_wave_get_info is "
+		<< dbg_ret << " the value is " << std::hex << value << std::endl;
 
 	
 
