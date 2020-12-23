@@ -1,3 +1,3 @@
 
 
-include("/home/zrji/ROCm/ROCdbgapi/build/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")
+include("/home/zrji/hsakmt_learn/ROCdbgapi/build/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")

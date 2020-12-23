@@ -4,7 +4,7 @@ if("${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" LESS 2.5)
    message(FATAL_ERROR "CMake >= 2.6.0 required")
 endif()
 cmake_policy(PUSH)
-cmake_policy(VERSION 2.6)
+cmake_policy(VERSION 2.6...3.17)
 #----------------------------------------------------------------
 # Generated CMake target import file.
 #----------------------------------------------------------------
@@ -45,15 +45,15 @@ unset(_expectedTargets)
 add_library(amd-dbgapi SHARED IMPORTED)
 
 set_target_properties(amd-dbgapi PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "/home/zrji/ROCm/ROCdbgapi/build/include"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/zrji/hsakmt_learn/ROCdbgapi/build/include"
 )
 
-# Import target "amd-dbgapi" for configuration "Debug"
-set_property(TARGET amd-dbgapi APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+# Import target "amd-dbgapi" for configuration "Release"
+set_property(TARGET amd-dbgapi APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(amd-dbgapi PROPERTIES
-  IMPORTED_LINK_DEPENDENT_LIBRARIES_DEBUG "amd_comgr"
-  IMPORTED_LOCATION_DEBUG "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
-  IMPORTED_SONAME_DEBUG "librocm-dbgapi.so.0"
+  IMPORTED_LINK_DEPENDENT_LIBRARIES_RELEASE "amd_comgr"
+  IMPORTED_LOCATION_RELEASE "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
+  IMPORTED_SONAME_RELEASE "librocm-dbgapi.so.0"
   )
 
 # This file does not depend on other imported targets which have

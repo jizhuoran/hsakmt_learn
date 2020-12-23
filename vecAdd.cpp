@@ -238,9 +238,9 @@ int main(int argc, char ** argv) {
 	// Creating command queue
 	cl_command_queue commandQueue = clCreateCommandQueue(context, deviceID, 0, &ret);
 
-	HsaVersionInfo VersionInfo;
-	HSAKMT_STATUS kmt_ret = hsaKmtGetVersion(&VersionInfo);
-	printf("The return value of hsaKmtGetVersion is %d \n", kmt_ret);
+//	HsaVersionInfo VersionInfo;
+//	HSAKMT_STATUS kmt_ret = hsaKmtGetVersion(&VersionInfo);
+//	printf("The return value of hsaKmtGetVersion is %d \n", kmt_ret);
 	
 	// printf("VersionInfo %u %u \n", VersionInfo.KernelInterfaceMajorVersion, VersionInfo.KernelInterfaceMinorVersion);
 
@@ -262,8 +262,8 @@ int main(int argc, char ** argv) {
 	// kmt_ret = hsaKmtEnableDebugTrap(1, INVALID_QUEUEID);
 	// printf("The return value of hsaKmtEnableDebugTrap is %d \n", kmt_ret);
 
-	kmt_ret = hsaKmtDbgRegister(1);
-	printf("The return value of hsaKmtDbgRegister is %d \n", kmt_ret);
+//	kmt_ret = hsaKmtDbgRegister(1);
+//	printf("The return value of hsaKmtDbgRegister is %d \n", kmt_ret);
 
 //	kmt_ret = hsaKmtDisableDebugTrap(1);
 //	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
@@ -300,15 +300,15 @@ int main(int argc, char ** argv) {
 	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
 
 
-	HsaDbgWaveMsgAMDGen2 wavemsggen2;
+	//HsaDbgWaveMsgAMDGen2 wavemsggen2;
 	
-	HsaDbgWaveMessageAMD wavemsg;
-	wavemsg.WaveMsgInfoGen2 = wavemsggen2;
+//	HsaDbgWaveMessageAMD wavemsg;
+//	wavemsg.WaveMsgInfoGen2 = wavemsggen2;
 
-	HsaDbgWaveMessage msg;
-	void* memoryva = malloc(1024 * 1024 * 1024);
-	msg.MemoryVA = memoryva;
-	msg.DbgWaveMsg = wavemsg;
+//	HsaDbgWaveMessage msg;
+//	void* memoryva = malloc(1024 * 1024 * 1024);
+//	msg.MemoryVA = memoryva;
+//	msg.DbgWaveMsg = wavemsg;
 
 
 
@@ -412,8 +412,8 @@ int main(int argc, char ** argv) {
 	}
 
 	
-	kmt_ret = hsaKmtDbgUnregister(1);
-	printf("The return value of hsaKmtDbgUnregister is %d \n", kmt_ret);
+//	kmt_ret = hsaKmtDbgUnregister(1);
+//	printf("The return value of hsaKmtDbgUnregister is %d \n", kmt_ret);
 
 
 	// Clean up, release memory.

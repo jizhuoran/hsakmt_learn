@@ -12,26 +12,28 @@ addVectors$local:
 	s_load_dword s6, s[6:7], 0x18
 	s_load_dword s4, s[4:5], 0x4
 	s_waitcnt lgkmcnt(0)
-	v_mov_b32_e32 v3, s1
+	v_mov_b32_e32 v4, s13
 	s_and_b32 s4, s4, 0xffff
 	s_mul_i32 s8, s8, s4
 	s_add_i32 s6, s6, s8
 	v_add_u32_e32 v1, s6, v0
 	v_mov_b32_e32 v0, 0
-	v_ashrrev_i64 v[0:1], 30, v[0:1]
-	v_add_co_u32_e32 v2, vcc, s0, v0
-	v_addc_co_u32_e32 v3, vcc, v3, v1, vcc
-	global_load_dword v4, v[2:3], off
-	v_mov_b32_e32 v3, s3
-	v_add_co_u32_e32 v2, vcc, s2, v0
-	v_addc_co_u32_e32 v3, vcc, v3, v1, vcc
-	global_load_dword v2, v[2:3], off
-	v_mov_b32_e32 v3, s13
-	v_add_co_u32_e32 v0, vcc, s12, v0
-	v_addc_co_u32_e32 v1, vcc, v3, v1, vcc
+	v_ashrrev_i64 v[1:2], 30, v[0:1]
+	v_add_co_u32_e32 v3, vcc, s12, v1
+	v_addc_co_u32_e32 v4, vcc, v4, v2, vcc
+	global_store_dword v[3:4], v0, off
+	v_mov_b32_e32 v0, s1
+	v_add_co_u32_e32 v5, vcc, s0, v1
+	v_addc_co_u32_e32 v6, vcc, v0, v2, vcc
+	global_load_dword v5, v[5:6], off
+	v_mov_b32_e32 v6, s3
+	v_add_co_u32_e32 v0, vcc, s2, v1
+	v_addc_co_u32_e32 v1, vcc, v6, v2, vcc
+	global_load_dword v0, v[0:1], off
 	s_waitcnt vmcnt(0)
-	v_add_f32_e32 v2, v4, v2
-	global_store_dword v[0:1], v2, off
+	v_add_f32_e32 v0, v5, v0
+	v_add_f32_e32 v0, 0, v0
+	global_store_dword v[3:4], v0, off
 	s_endpgm
 	.section	.rodata,#alloc
 	.p2align	6
@@ -51,7 +53,7 @@ addVectors$local:
 		.amdhsa_system_sgpr_workgroup_id_z 0
 		.amdhsa_system_sgpr_workgroup_info 0
 		.amdhsa_system_vgpr_workitem_id 0
-		.amdhsa_next_free_vgpr 5
+		.amdhsa_next_free_vgpr 7
 		.amdhsa_next_free_sgpr 16
 		.amdhsa_reserve_flat_scratch 0
 		.amdhsa_float_round_mode_32 0
@@ -75,9 +77,9 @@ addVectors$local:
                                         ; -- End function
 	.section	.AMDGPU.csdata
 ; Kernel info:
-; codeLenInByte = 140
+; codeLenInByte = 152
 ; NumSgprs: 18
-; NumVgprs: 5
+; NumVgprs: 7
 ; ScratchSize: 0
 ; MemoryBound: 0
 ; FloatMode: 240
@@ -86,7 +88,7 @@ addVectors$local:
 ; SGPRBlocks: 2
 ; VGPRBlocks: 1
 ; NumSGPRsForWavesPerEU: 18
-; NumVGPRsForWavesPerEU: 5
+; NumVGPRsForWavesPerEU: 7
 ; Occupancy: 10
 ; WaveLimiterHint : 1
 ; COMPUTE_PGM_RSRC2:USER_SGPR: 8
@@ -103,14 +105,12 @@ addVectors$local:
 amdhsa.kernels:
   - .args:
       - .address_space:  global
-        .is_const:       true
         .name:           a
         .offset:         0
         .size:           8
         .type_name:      'float*'
         .value_kind:     global_buffer
       - .address_space:  global
-        .is_const:       true
         .name:           b
         .offset:         8
         .size:           8
@@ -160,7 +160,7 @@ amdhsa.kernels:
     .sgpr_count:     18
     .sgpr_spill_count: 0
     .symbol:         addVectors.kd
-    .vgpr_count:     5
+    .vgpr_count:     7
     .vgpr_spill_count: 0
     .wavefront_size: 64
 amdhsa.version:

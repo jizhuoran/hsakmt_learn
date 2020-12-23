@@ -1,8 +1,8 @@
-# Install script for directory: /home/zrji/ROCm/ROCdbgapi
+# Install script for directory: /home/zrji/hsakmt_learn/ROCdbgapi
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/zrji/ROCm/ROCdbgapi/install")
+  set(CMAKE_INSTALL_PREFIX "/home/zrji/hsakmt_learn/ROCdbgapi/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -37,6 +37,11 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
+endif()
+
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   foreach(file
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librocm-dbgapi.so.0.42.0"
@@ -50,8 +55,8 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     endif()
   endforeach()
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
-    "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so.0"
+    "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
+    "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so.0"
     )
   foreach(file
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librocm-dbgapi.so.0.42.0"
@@ -77,7 +82,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librocm-dbgapi.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librocm-dbgapi.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librocm-dbgapi.so")
     file(RPATH_CHANGE
@@ -91,22 +96,22 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES "/home/zrji/ROCm/ROCdbgapi/build/include/amd-dbgapi.h")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES "/home/zrji/hsakmt_learn/ROCdbgapi/build/include/amd-dbgapi.h")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/amd-dbgapi" TYPE FILE FILES "/home/zrji/ROCm/ROCdbgapi/LICENSE.txt")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/amd-dbgapi" TYPE FILE FILES "/home/zrji/hsakmt_learn/ROCdbgapi/LICENSE.txt")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi" TYPE FILE RENAME "amd-dbgapi-config.cmake" FILES "/home/zrji/ROCm/ROCdbgapi/build/amd-dbgapi-config.cmake.install")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi" TYPE FILE RENAME "amd-dbgapi-config.cmake" FILES "/home/zrji/hsakmt_learn/ROCdbgapi/build/amd-dbgapi-config.cmake.install")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake"
-         "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/Export/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")
+         "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/Export/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi/amd-dbgapi-targets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -115,10 +120,18 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi" TYPE FILE FILES "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/Export/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")
-  if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi" TYPE FILE FILES "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/Export/lib/cmake/amd-dbgapi/amd-dbgapi-targets-debug.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi" TYPE FILE FILES "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/Export/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")
+  if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/amd-dbgapi" TYPE FILE FILES "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/Export/lib/cmake/amd-dbgapi/amd-dbgapi-targets-release.cmake")
   endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/amd-dbgapi" TYPE FILE OPTIONAL RENAME "amd-dbgapi.pdf" FILES "/home/zrji/hsakmt_learn/ROCdbgapi/build/doc/latex/refman.pdf")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/html/amd-dbgapi" TYPE DIRECTORY OPTIONAL FILES "/home/zrji/hsakmt_learn/ROCdbgapi/build/doc/html/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -129,5 +142,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zrji/ROCm/ROCdbgapi/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/zrji/hsakmt_learn/ROCdbgapi/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

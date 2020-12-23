@@ -4,25 +4,25 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/zrji/ROCm/ROCdbgapi/src/agent.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/agent.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/architecture.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/architecture.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/callbacks.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/callbacks.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/code_object.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/code_object.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/debug.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/debug.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/dispatch.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/dispatch.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/displaced_stepping.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/displaced_stepping.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/event.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/event.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/initialization.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/initialization.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/logging.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/logging.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/memory.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/memory.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/os_driver.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/os_driver.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/process.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/process.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/queue.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/queue.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/register.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/register.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/utils.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/utils.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/versioning.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/watchpoint.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/watchpoint.cpp.o"
-  "/home/zrji/ROCm/ROCdbgapi/src/wave.cpp" "/home/zrji/ROCm/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/wave.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/agent.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/agent.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/architecture.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/architecture.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/callbacks.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/callbacks.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/code_object.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/code_object.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/debug.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/debug.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/dispatch.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/dispatch.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/displaced_stepping.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/displaced_stepping.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/event.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/event.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/initialization.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/initialization.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/logging.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/logging.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/memory.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/memory.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/os_driver.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/os_driver.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/process.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/process.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/queue.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/queue.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/register.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/register.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/utils.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/utils.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/versioning.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/versioning.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/watchpoint.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/watchpoint.cpp.o"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/src/wave.cpp" "/home/zrji/hsakmt_learn/ROCdbgapi/build/CMakeFiles/amd-dbgapi.dir/src/wave.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -44,8 +44,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Pairs of files generated by the same build rule.
 set(CMAKE_MULTIPLE_OUTPUT_PAIRS
-  "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so" "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
-  "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so.0" "/home/zrji/ROCm/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so" "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
+  "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so.0" "/home/zrji/hsakmt_learn/ROCdbgapi/build/librocm-dbgapi.so.0.42.0"
   )
 
 
