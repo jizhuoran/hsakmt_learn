@@ -30,6 +30,7 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include <iostream>
 
 #include <dirent.h>
 #include <errno.h>
@@ -100,6 +101,7 @@ linux_driver_t::xfer_global_memory_partial (
     amd_dbgapi_global_address_t address, void *read, const void *write,
     size_t *size) const
 {
+  std::cout << "Come to this function xfer_global_memory_partial" << std::endl;
   dbgapi_assert (!read != !write && "either read or write buffer");
   dbgapi_assert (is_valid ());
 
