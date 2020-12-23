@@ -48,7 +48,7 @@ shared_library_t::shared_library_t (amd_dbgapi_shared_library_id_t library_id,
       != AMD_DBGAPI_STATUS_SUCCESS)
     return;
 
-  std::cout << "The handler we have is " << library_id.handler << std::endl;
+  std::cout << "The handler we have is " << library_id.handle << std::endl;
 
   m_is_valid = true;
   set_state (state);
