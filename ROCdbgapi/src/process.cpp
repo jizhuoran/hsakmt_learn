@@ -1343,25 +1343,25 @@ process_t::attach ()
 
     /* Check the r_version.  */
     int r_version;
-    status = read_global_memory (m_r_debug_address
-                                     + offsetof (struct r_debug, r_version),
-                                 &r_version, sizeof (r_version));
-    if (status != AMD_DBGAPI_STATUS_SUCCESS)
-      error ("read_global_memory failed (rc=%d)", status);
+    // status = read_global_memory (m_r_debug_address
+    //                                  + offsetof (struct r_debug, r_version),
+    //                              &r_version, sizeof (r_version));
+    // if (status != AMD_DBGAPI_STATUS_SUCCESS)
+    //   error ("read_global_memory failed (rc=%d)", status);
   
     std::cout << "on_runtime_load_callback 4" << std::endl;
-
-    // if (r_version != ROCR_RDEBUG_VERSION)
-    //   {
-    //     warning ("%s: AMD GPU runtime _amdgpu_r_debug.r_version %d "
-    //              "does not match %d requirement",
-    //              library.name ().c_str (), r_version, ROCR_RDEBUG_VERSION);
-    //     enqueue_event (create<event_t> (
-    //         *this, AMD_DBGAPI_EVENT_KIND_RUNTIME,
-    //         AMD_DBGAPI_RUNTIME_STATE_LOADED_ERROR_RESTRICTION));
-    //     return;
-    //   }
     r_version = ROCR_RDEBUG_VERSION; // UGLY
+
+    if (r_version != ROCR_RDEBUG_VERSION)
+      {
+        warning ("%s: AMD GPU runtime _amdgpu_r_debug.r_version %d "
+                 "does not match %d requirement",
+                 library.name ().c_str (), r_version, ROCR_RDEBUG_VERSION);
+        enqueue_event (create<event_t> (
+            *this, AMD_DBGAPI_EVENT_KIND_RUNTIME,
+            AMD_DBGAPI_RUNTIME_STATE_LOADED_ERROR_RESTRICTION));
+        return;
+      }
     std::cout << "on_runtime_load_callback 5" << std::endl;
 
     /* Install a breakpoint at _amd_r_debug.r_brk.  The runtime calls this
