@@ -316,7 +316,7 @@ int main(int argc, char ** argv) {
 	amd_dbgapi_global_address_t archid;
 	dbg_ret = amd_dbgapi_wave_get_info (
 		waves[0],
-        AMD_DBGAPI_WAVE_INFO_PC, 
+        AMD_DBGAPI_WAVE_INFO_ARCHITECTURE, 
 		sizeof(amd_dbgapi_global_address_t),
         &archid);
 
