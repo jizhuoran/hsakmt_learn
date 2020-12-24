@@ -313,6 +313,15 @@ int main(int argc, char ** argv) {
 	std::cout << "The return of amd_dbgapi_wave_get_info is "
 		<< dbg_ret << " the dispatch_id is " << dispatcher.handle << std::endl;
 
+	amd_dbgapi_global_address_t entry;
+	dbg_ret = amd_dbgapi_dispatch_get_info (
+    	dispatcher,AMD_DBGAPI_DISPATCH_INFO_KERNEL_CODE_ENTRY_ADDRESS,
+    	sizeof(amd_dbgapi_global_address_t), &entry);
+
+	std::cout << "The return of amd_dbgapi_dispatch_get_info is "
+		<< dbg_ret << " the entry is " << std::hex << entry << std::endl;
+
+
 	amd_dbgapi_global_address_t PC;
 	dbg_ret = amd_dbgapi_wave_get_info (
 		waves[0],
