@@ -11,7 +11,7 @@ Sources: http://www.eriksmistad.no/getting-started-with-opencl-and-gpu-computing
 #else
 #include <CL/cl.h>
 #endif
-#include <hsakmt.h>
+// #include <hsakmt.h>
 #include <amd-dbgapi.h>
 
 
@@ -256,24 +256,25 @@ int main(int argc, char ** argv) {
 	// amd_dbgapi_status_t dbg_ret = amd_dbgapi_initialize (&dbgapi_callbacks);
 	// printf("The return value of amd_dbgapi_initialize is %d \n", dbg_ret);
 
+	// amd_dbgapi_status_t dbg_ret;
 
 	// user_process_id.pid = getpid();
 
 
 
-	fflush(stdout);
-	printf("Before clEnqueueNDRangeKernel \n");
-	fflush(stdout);
+	// fflush(stdout);
+	// printf("Before clEnqueueNDRangeKernel \n");
+	// fflush(stdout);
 	// Execute the kernel
 	size_t globalItemSize = SIZE;
 	size_t localItemSize = 64; // globalItemSize has to be a multiple of localItemSize. 1024/64 = 16 
 	ret = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalItemSize, &localItemSize, 0, NULL, NULL);	
-	fflush(stdout);
-	printf("After clEnqueueNDRangeKernel \n");
-	fflush(stdout);
+	// fflush(stdout);
+	// printf("After clEnqueueNDRangeKernel \n");
+	// fflush(stdout);
 
 
-	printf("Before half!!! \n");
+	// printf("Before half!!! \n");
 	
 	// amd_dbgapi_callbacks_s callback;
 
@@ -313,66 +314,66 @@ int main(int argc, char ** argv) {
 	// printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
 
 	amd_dbgapi_dispatch_id_t dispatcher;
-	amd_dbgapi_status_t dbg_ret = amd_dbgapi_wave_get_info (
-		waves[0],
-        AMD_DBGAPI_WAVE_INFO_DISPATCH, 
-		sizeof(amd_dbgapi_dispatch_id_t),
-        &dispatcher);
+	AMDDBGAPI_CHECK(amd_dbgapi_wave_get_info (
+		waves[0], AMD_DBGAPI_WAVE_INFO_DISPATCH, 
+		sizeof(amd_dbgapi_dispatch_id_t), &dispatcher));
+	std::cout << "LOG: dispatch_id is " << dispatcher.handle << std::endl;
 
-	std::cout << "The return of amd_dbgapi_wave_get_info is "
-		<< dbg_ret << " the dispatch_id is " << dispatcher.handle << std::endl;
+
 
 	amd_dbgapi_global_address_t entry;
-	dbg_ret = amd_dbgapi_dispatch_get_info (
-    	dispatcher,AMD_DBGAPI_DISPATCH_INFO_KERNEL_CODE_ENTRY_ADDRESS,
-    	sizeof(amd_dbgapi_global_address_t), &entry);
+	AMDDBGAPI_CHECK(amd_dbgapi_dispatch_get_info (
+    	dispatcher, AMD_DBGAPI_DISPATCH_INFO_KERNEL_CODE_ENTRY_ADDRESS,
+    	sizeof(amd_dbgapi_global_address_t), &entry));
+	std::cout << "LOG: entry is " << std::hex << entry << std::endl;
 
-	std::cout << "The return of amd_dbgapi_dispatch_get_info is "
-		<< dbg_ret << " the entry is " << std::hex << entry << std::endl;
+
+	// std::cout << "The return of amd_dbgapi_dispatch_get_info is "
+		// << dbg_ret << " the entry is " << std::hex << entry << std::endl;
 
 
 	amd_dbgapi_global_address_t PC;
-	dbg_ret = amd_dbgapi_wave_get_info (
-		waves[0],
-        AMD_DBGAPI_WAVE_INFO_PC, 
-		sizeof(amd_dbgapi_global_address_t),
-        &PC);
+	AMDDBGAPI_CHECK(amd_dbgapi_wave_get_info (
+		waves[0], AMD_DBGAPI_WAVE_INFO_PC, 
+		sizeof(amd_dbgapi_global_address_t), &PC));
+	std::cout << "LOG: PC is " << std::hex << PC << std::endl;
 
-	std::cout << "The return of amd_dbgapi_wave_get_info is "
-		<< dbg_ret << " the PC is " << std::hex << PC << std::endl;
+	std::cout << "PRINT: offset is " << std::hex << PC - entry << std::endl;
 
-	amd_dbgapi_architecture_id_t archid;
-	dbg_ret = amd_dbgapi_wave_get_info (
-		waves[0],
-        AMD_DBGAPI_WAVE_INFO_ARCHITECTURE, 
-		sizeof(amd_dbgapi_architecture_id_t),
-        &archid);
+	// std::cout << "The return of amd_dbgapi_wave_get_info is "
+	// 	<< dbg_ret << " the PC is " << std::hex << PC << std::endl;
 
-	std::cout << "The return archid of amd_dbgapi_wave_get_info is "
-		<< dbg_ret << " the arch is " << archid.handle << std::endl;
+	// amd_dbgapi_architecture_id_t archid;
+	// dbg_ret = amd_dbgapi_wave_get_info (
+	// 	waves[0],
+    //     AMD_DBGAPI_WAVE_INFO_ARCHITECTURE, 
+	// 	sizeof(amd_dbgapi_architecture_id_t),
+    //     &archid);
 
-	amd_dbgapi_architecture_id_t archid2;
+	// std::cout << "The return archid of amd_dbgapi_wave_get_info is "
+	// 	<< dbg_ret << " the arch is " << archid.handle << std::endl;
 
-	enum elf_amdgpu_machine_t : uint32_t
-	{
-		EF_AMDGPU_MACH_NONE = 0x000,
-		EF_AMDGPU_MACH_AMDGCN_GFX900 = 0x02c,
-		EF_AMDGPU_MACH_AMDGCN_GFX902 = 0x02d,
-		EF_AMDGPU_MACH_AMDGCN_GFX904 = 0x02e,
-		EF_AMDGPU_MACH_AMDGCN_GFX906 = 0x02f,
-		EF_AMDGPU_MACH_AMDGCN_GFX908 = 0x030,
-		EF_AMDGPU_MACH_AMDGCN_GFX1010 = 0x033,
-		EF_AMDGPU_MACH_AMDGCN_GFX1011 = 0x034,
-		EF_AMDGPU_MACH_AMDGCN_GFX1012 = 0x035,
-		EF_AMDGPU_MACH_AMDGCN_GFX1030 = 0x036,
-		EF_AMDGPU_MACH_AMDGCN_GFX1031 = 0x037,
-	};
+	// amd_dbgapi_architecture_id_t archid2;
 
-	dbg_ret = amd_dbgapi_get_architecture(EF_AMDGPU_MACH_AMDGCN_GFX906, &archid2);
-	std::cout << "The return archid of amd_dbgapi_get_architecture is "
-		<< dbg_ret << " the arch is " << archid2.handle << std::endl;
+	// enum elf_amdgpu_machine_t : uint32_t
+	// {
+	// 	EF_AMDGPU_MACH_NONE = 0x000,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX900 = 0x02c,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX902 = 0x02d,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX904 = 0x02e,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX906 = 0x02f,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX908 = 0x030,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX1010 = 0x033,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX1011 = 0x034,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX1012 = 0x035,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX1030 = 0x036,
+	// 	EF_AMDGPU_MACH_AMDGCN_GFX1031 = 0x037,
+	// };
 
-	std::cout << "So finally we get the offset " << std::hex << PC - entry << std::endl;
+	// dbg_ret = amd_dbgapi_get_architecture(EF_AMDGPU_MACH_AMDGCN_GFX906, &archid2);
+	// std::cout << "The return archid of amd_dbgapi_get_architecture is "
+	// 	<< dbg_ret << " the arch is " << archid2.handle << std::endl;
+
 
 	// void* memorydecode = malloc(1024);
 	// char* instruction_text;
@@ -386,7 +387,7 @@ int main(int argc, char ** argv) {
 	// printf("The return value of amd_dbgapi_disassemble_instruction is %d\n", dbg_ret);
 	// std::cout << "disassemble is " << size << "text is " << instruction_text << std::endl;
 
-	printf("We halt it!!! \n");
+	// printf("We halt it!!! \n");
 	// kmt_ret = hsaKmtQueueSuspend(
     //    -1 ,/*HSAuint32    Pid,*/
     //    1 ,/*HSAuint32    NumQueues,*/
@@ -403,7 +404,7 @@ int main(int argc, char ** argv) {
 
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
-	printf("So no this line!!!");
+	// printf("So no this line!!!");
 
 	// amd_dbgapi_disassemble_instruction
 
