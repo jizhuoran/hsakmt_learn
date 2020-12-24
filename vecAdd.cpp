@@ -330,7 +330,7 @@ int main(int argc, char ** argv) {
 	
 	dbg_ret = amd_dbgapi_disassemble_instruction (
     	archid,
-    	value, &size,
+    	PC, &size,
     	memorydecode, &instruction_text,
     	NULL, NULL);
 	printf("The return value of amd_dbgapi_disassemble_instruction is %d\n", dbg_ret);
