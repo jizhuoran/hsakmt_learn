@@ -313,7 +313,7 @@ int main(int argc, char ** argv) {
 	// printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
 
 	amd_dbgapi_dispatch_id_t dispatcher;
-	dbg_ret = amd_dbgapi_wave_get_info (
+	amd_dbgapi_status_t dbg_ret = amd_dbgapi_wave_get_info (
 		waves[0],
         AMD_DBGAPI_WAVE_INFO_DISPATCH, 
 		sizeof(amd_dbgapi_dispatch_id_t),
