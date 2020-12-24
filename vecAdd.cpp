@@ -11,130 +11,14 @@ Sources: http://www.eriksmistad.no/getting-started-with-opencl-and-gpu-computing
 #else
 #include <CL/cl.h>
 #endif
-// #include <hsakmt.h>
-#include <amd-dbgapi.h>
 
-
-
-#include <dlfcn.h>
 #include <iostream>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <map>
 
+#include "pc_getter.hpp"
 
 #define MAX_SOURCE_SIZE (0x100000)
-
-#define AMDDBGAPI_CHECK(condition) \
-  do { \
-    amd_dbgapi_status_t error = condition; \
-    if(error != AMD_DBGAPI_STATUS_SUCCESS) { \
-      std::cerr << "This is a error for AMDDBGAPI "<< error << " in " << __LINE__ << " in " << __FILE__ << std::endl;\
-      exit(1); \
-    } \
-  } while (0)
-  
-// #include <execinfo.h>
-// void print_trace(void) {
-//     char **strings;
-//     size_t i, size;
-//     enum Constexpr { MAX_SIZE = 1024 };
-//     void *array[MAX_SIZE];
-//     size = backtrace(array, MAX_SIZE);
-//     strings = backtrace_symbols(array, size);
-//     for (i = 0; i < size; i++)
-//         printf("%s\n", strings[i]);
-//     puts("");
-//     free(strings);
-// }
-
-
-
-
-struct amd_dbgapi_client_process_s {
-	pid_t pid;
-};
-
-std::map<uint64_t, void*> handle2address;
-
-static amd_dbgapi_callbacks_t dbgapi_callbacks = {
-  /* allocate_memory.  */
-  .allocate_memory = malloc,
-
-  /* deallocate_memory.  */
-  .deallocate_memory = free,
-
-  /* get_os_pid.  */
-  .get_os_pid =
-      [] (amd_dbgapi_client_process_id_t client_process_id, pid_t *pid) {
-        *pid = getpid ();
-        return AMD_DBGAPI_STATUS_SUCCESS;
-      },
-
-  /* enable_notify_shared_library callback.  */
-  .enable_notify_shared_library =
-      [] (amd_dbgapi_client_process_id_t client_process_id,
-          const char *library_name, amd_dbgapi_shared_library_id_t library_id,
-          amd_dbgapi_shared_library_state_t *library_state) {
-        /* If the debug agent is loaded, then the ROCR is already loaded.   */
-		void* address = dlopen(library_name, RTLD_NOW);
-        *library_state = AMD_DBGAPI_SHARED_LIBRARY_STATE_LOADED;
-		handle2address[library_id.handle] = address;
-        return AMD_DBGAPI_STATUS_SUCCESS;
-      },
-
-  /* disable_notify_shared_library callback.  */
-  .disable_notify_shared_library =
-      [] (amd_dbgapi_client_process_id_t client_process_id,
-          amd_dbgapi_shared_library_id_t library_id) {
-        return AMD_DBGAPI_STATUS_SUCCESS;
-      },
-
-  /* get_symbol_address callback.  */
-  .get_symbol_address =
-      [] (amd_dbgapi_client_process_id_t client_process_id,
-          amd_dbgapi_shared_library_id_t library_id, const char *symbol_name,
-          amd_dbgapi_global_address_t *address) {
-        *address = reinterpret_cast<amd_dbgapi_global_address_t> (
-            dlsym (handle2address[library_id.handle], symbol_name));
-        return AMD_DBGAPI_STATUS_SUCCESS;
-      },
-
-  /* set_breakpoint callback.  */
-  .insert_breakpoint =
-      [] (amd_dbgapi_client_process_id_t client_process_id,
-          amd_dbgapi_shared_library_id_t shared_library_id,
-          amd_dbgapi_global_address_t address,
-          amd_dbgapi_breakpoint_id_t breakpoint_id) {
-        return AMD_DBGAPI_STATUS_SUCCESS;
-      },
-
-  /* remove_breakpoint callback.  */
-  .remove_breakpoint =
-      [] (amd_dbgapi_client_process_id_t client_process_id,
-          amd_dbgapi_breakpoint_id_t breakpoint_id) {
-        return AMD_DBGAPI_STATUS_SUCCESS;
-      },
-
-  /* log_message callback.  */
-  .log_message =
-      [] (amd_dbgapi_log_level_t level, const char *message) {
-        std::cout << "rocm-dbgapi: " << message << std::endl;
-      }
-};
-
-class PCGetter {
-private:
-	std::map<uint64_t, void*> handle2address;
-public:
-	PCGetter() {
-		AMDDBGAPI_CHECK(amd_dbgapi_initialize (&dbgapi_callbacks));
-	}
-
-};
-
-
 
 
 int main(int argc, char ** argv) {
@@ -190,41 +74,6 @@ int main(int argc, char ** argv) {
 	// Creating command queue
 	cl_command_queue commandQueue = clCreateCommandQueue(context, deviceID, 0, &ret);
 
-	// HsaVersionInfo VersionInfo;
-	// HSAKMT_STATUS kmt_ret = hsaKmtGetVersion(&VersionInfo);
-	// printf("The return value of hsaKmtGetVersion is %d \n", kmt_ret);
-	
-	// printf("VersionInfo %u %u \n", VersionInfo.KernelInterfaceMajorVersion, VersionInfo.KernelInterfaceMinorVersion);
-
-	// HSAuint32 Major, Minor;
-	// kmt_ret = hsaKmtGetKernelDebugTrapVersionInfo(
-    // &Major, &Minor);
-	// printf("Major Minor %u %u \n", Major, Minor);
-	// printf("The return value of hsaKmtGetKernelDebugTrapVersionInfo is %d \n", kmt_ret);
-
-
-	// HsaNodeProperties NodeProperties;
-	// kmt_ret = hsaKmtGetNodeProperties(1, &NodeProperties);
-	// printf("The return value of hsaKmtGetNodeProperties is %d \n", kmt_ret);
-	
-	// printf("NodeProperties %lu \n", NodeProperties.DebugProperties.Value);
-
-
-
-	// kmt_ret = hsaKmtEnableDebugTrap(1, INVALID_QUEUEID);
-	// printf("The return value of hsaKmtEnableDebugTrap is %d \n", kmt_ret);
-
-	// kmt_ret = hsaKmtDbgRegister(1);
-	// printf("The return value of hsaKmtDbgRegister is %d \n", kmt_ret);
-
-//	kmt_ret = hsaKmtDisableDebugTrap(1);
-//	printf("The return value of hsaKmtDisableDebugTrap is %d \n", kmt_ret);
-
-
-
-
-
-
 	// Memory buffers for each array
 	cl_mem aMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
 	cl_mem bMemObj = clCreateBuffer(context, CL_MEM_READ_ONLY, SIZE * sizeof(float), NULL, &ret);
@@ -250,186 +99,19 @@ int main(int argc, char ** argv) {
 	ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&bMemObj);	
 	ret = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&cMemObj);	
 
-	// kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_HALT);
-	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+	PCGetter pc_getter;
 
-
-	// HsaDbgWaveMsgAMDGen2 wavemsggen2;
-	
-	// HsaDbgWaveMessageAMD wavemsg;
-	// wavemsg.WaveMsgInfoGen2 = wavemsggen2;
-
-	// HsaDbgWaveMessage msg;
-	// void* memoryva = malloc(1024 * 1024 * 1024);
-	// msg.MemoryVA = memoryva;
-	// msg.DbgWaveMsg = wavemsg;
-
-	AMDDBGAPI_CHECK(amd_dbgapi_initialize (&dbgapi_callbacks));
-
-	// amd_dbgapi_status_t dbg_ret = amd_dbgapi_initialize (&dbgapi_callbacks);
-	// printf("The return value of amd_dbgapi_initialize is %d \n", dbg_ret);
-
-	// amd_dbgapi_status_t dbg_ret;
-
-	// user_process_id.pid = getpid();
-
-
-
-	// fflush(stdout);
-	// printf("Before clEnqueueNDRangeKernel \n");
-	// fflush(stdout);
 	// Execute the kernel
 	size_t globalItemSize = SIZE;
 	size_t localItemSize = 64; // globalItemSize has to be a multiple of localItemSize. 1024/64 = 16 
 	ret = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalItemSize, &localItemSize, 0, NULL, NULL);	
-	// fflush(stdout);
-	// printf("After clEnqueueNDRangeKernel \n");
-	// fflush(stdout);
 
-
-	// printf("Before half!!! \n");
-	
-	// amd_dbgapi_callbacks_s callback;
-
-	// callback.allocate_memory = &allocate_memory;
-	// callback.deallocate_memory = &deallocate_memory;
-	// callback.get_os_pid = &get_os_pid;
-	// callback.enable_notify_shared_library = &enable_notify_shared_library;
-	// callback.disable_notify_shared_library = &disable_notify_shared_library;
-	// callback.get_symbol_address = &get_symbol_address;
-	// callback.insert_breakpoint = &insert_breakpoint;
-	// callback.remove_breakpoint = &remove_breakpoint;
-	// callback.log_message = &log_message;
-
-	amd_dbgapi_process_id_t process_id;
-	struct amd_dbgapi_client_process_s user_process_id {getpid()};
-	AMDDBGAPI_CHECK(amd_dbgapi_process_attach(&user_process_id, &process_id));
-	// dbg_ret = amd_dbgapi_process_attach (&user_process_id, &process_id);
-	// printf("The return value of amd_dbgapi_process_attach is %d \n", dbg_ret);
-
-
-	size_t wave_count;
-	amd_dbgapi_wave_id_t* waves;
-
-	AMDDBGAPI_CHECK(amd_dbgapi_process_wave_list(
-    	AMD_DBGAPI_PROCESS_NONE, &wave_count, &waves, NULL));
-	std::cout << "LOG: the num of wave is " << wave_count << std::endl;
-
-
-	AMDDBGAPI_CHECK(amd_dbgapi_wave_stop (waves[0]));
-
-	// dbg_ret = amd_dbgapi_process_wave_list (
-    // 	AMD_DBGAPI_PROCESS_NONE, &wave_count, &waves, NULL);
-
-	// printf("The return value of amd_dbgapi_process_wave_list is %d and the value is %lu \n", dbg_ret, wave_count);
-
-	// dbg_ret = amd_dbgapi_wave_stop (waves[0]);
-	// printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
-
-	amd_dbgapi_dispatch_id_t dispatcher;
-	AMDDBGAPI_CHECK(amd_dbgapi_wave_get_info (
-		waves[0], AMD_DBGAPI_WAVE_INFO_DISPATCH, 
-		sizeof(amd_dbgapi_dispatch_id_t), &dispatcher));
-	std::cout << "LOG: dispatch_id is " << dispatcher.handle << std::endl;
-
-
-
-	amd_dbgapi_global_address_t entry;
-	AMDDBGAPI_CHECK(amd_dbgapi_dispatch_get_info (
-    	dispatcher, AMD_DBGAPI_DISPATCH_INFO_KERNEL_CODE_ENTRY_ADDRESS,
-    	sizeof(amd_dbgapi_global_address_t), &entry));
-	std::cout << "LOG: entry is " << std::hex << entry << std::endl;
-
-
-	// std::cout << "The return of amd_dbgapi_dispatch_get_info is "
-		// << dbg_ret << " the entry is " << std::hex << entry << std::endl;
-
-
-	amd_dbgapi_global_address_t PC;
-	AMDDBGAPI_CHECK(amd_dbgapi_wave_get_info (
-		waves[0], AMD_DBGAPI_WAVE_INFO_PC, 
-		sizeof(amd_dbgapi_global_address_t), &PC));
-	std::cout << "LOG: PC is " << std::hex << PC << std::endl;
-
-	std::cout << "PRINT: offset is " << std::hex << PC - entry << std::endl;
-
-	// std::cout << "The return of amd_dbgapi_wave_get_info is "
-	// 	<< dbg_ret << " the PC is " << std::hex << PC << std::endl;
-
-	// amd_dbgapi_architecture_id_t archid;
-	// dbg_ret = amd_dbgapi_wave_get_info (
-	// 	waves[0],
-    //     AMD_DBGAPI_WAVE_INFO_ARCHITECTURE, 
-	// 	sizeof(amd_dbgapi_architecture_id_t),
-    //     &archid);
-
-	// std::cout << "The return archid of amd_dbgapi_wave_get_info is "
-	// 	<< dbg_ret << " the arch is " << archid.handle << std::endl;
-
-	// amd_dbgapi_architecture_id_t archid2;
-
-	// enum elf_amdgpu_machine_t : uint32_t
-	// {
-	// 	EF_AMDGPU_MACH_NONE = 0x000,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX900 = 0x02c,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX902 = 0x02d,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX904 = 0x02e,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX906 = 0x02f,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX908 = 0x030,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX1010 = 0x033,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX1011 = 0x034,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX1012 = 0x035,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX1030 = 0x036,
-	// 	EF_AMDGPU_MACH_AMDGCN_GFX1031 = 0x037,
-	// };
-
-	// dbg_ret = amd_dbgapi_get_architecture(EF_AMDGPU_MACH_AMDGCN_GFX906, &archid2);
-	// std::cout << "The return archid of amd_dbgapi_get_architecture is "
-	// 	<< dbg_ret << " the arch is " << archid2.handle << std::endl;
-
-
-	// void* memorydecode = malloc(1024);
-	// char* instruction_text;
-	// amd_dbgapi_size_t size = 4;
-	
-	// dbg_ret = amd_dbgapi_disassemble_instruction (
-    // 	archid,
-    // 	PC, &size,
-    // 	memorydecode, &instruction_text,
-    // 	NULL, NULL);
-	// printf("The return value of amd_dbgapi_disassemble_instruction is %d\n", dbg_ret);
-	// std::cout << "disassemble is " << size << "text is " << instruction_text << std::endl;
-
-	// printf("We halt it!!! \n");
-	// kmt_ret = hsaKmtQueueSuspend(
-    //    -1 ,/*HSAuint32    Pid,*/
-    //    1 ,/*HSAuint32    NumQueues,*/
-    //    NULL,/*HSA_QUEUEID *Queues,*/
-    //    0,/*HSAuint32    GracePeriod,*/
-    //    2);/*This is true QueueID */
-
-	// kmt_ret = hsaKmtQueueResume(-1, 1, NULL, 2);
-	// printf("The return value is %d \n", kmt_ret);
-
-
-	// kmt_ret = hsaKmtSetWaveLaunchMode(1, HSA_DBG_WAVE_LAUNCH_MODE_NORMAL);
-	// printf("The return value of hsaKmtSetWaveLaunchMode is %d \n", kmt_ret);
+	auto offset = pc_getter.stop_and_get_pc_offset();
+	std::cout << "The offset is " << offset << std::endl;
 
 	// Read from device back to host.
 	ret = clEnqueueReadBuffer(commandQueue, cMemObj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
-	// printf("So no this line!!!");
-
-	// amd_dbgapi_disassemble_instruction
-
-	// Write result
-	/*
-	for (i=0; i<SIZE; ++i) {
-
-		printf("%f + %f = %f\n", A[i], B[i], C[i]);
-
-	}
-	*/
-
+	
 	// Test if correct answer
 	for (i=0; i<SIZE; ++i) {
 		if (C[i] != 1024*(A[i] + B[i])) {
@@ -440,11 +122,6 @@ int main(int argc, char ** argv) {
 	if (i == SIZE) {
 		printf("Everything seems to work fine! \n");
 	}
-
-	
-	// kmt_ret = hsaKmtDbgUnregister(1);
-	// printf("The return value of hsaKmtDbgUnregister is %d \n", kmt_ret);
-
 
 	// Clean up, release memory.
 	ret = clFlush(commandQueue);
@@ -462,4 +139,4 @@ int main(int argc, char ** argv) {
 
 	return 0;
 
-	}
+}
