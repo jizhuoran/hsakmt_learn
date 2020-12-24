@@ -363,20 +363,19 @@ int main(int argc, char ** argv) {
 	std::cout << "The return archid of amd_dbgapi_get_architecture is "
 		<< dbg_ret << " the arch is " << archid2.handle << std::endl;
 
+	std::cout << "So finally we get the offset " << std::hex << PC - entry << std::endl;
 
-
-	void* memorydecode = malloc(1024);
-	char* instruction_text;
-	amd_dbgapi_size_t size = 4;
+	// void* memorydecode = malloc(1024);
+	// char* instruction_text;
+	// amd_dbgapi_size_t size = 4;
 	
-	dbg_ret = amd_dbgapi_disassemble_instruction (
-    	archid,
-    	PC, &size,
-    	memorydecode, &instruction_text,
-    	NULL, NULL);
-	printf("The return value of amd_dbgapi_disassemble_instruction is %d\n", dbg_ret);
-	std::cout << "disassemble is " << size << "text is " << instruction_text << std::endl;
-	// hsaKmtDbgWavefrontControl(1, HSA_DBG_WAVEOP_KILL, HSA_DBG_WAVEMODE_BROADCAST_PROCESS, 1, &msg);
+	// dbg_ret = amd_dbgapi_disassemble_instruction (
+    // 	archid,
+    // 	PC, &size,
+    // 	memorydecode, &instruction_text,
+    // 	NULL, NULL);
+	// printf("The return value of amd_dbgapi_disassemble_instruction is %d\n", dbg_ret);
+	// std::cout << "disassemble is " << size << "text is " << instruction_text << std::endl;
 
 	printf("We halt it!!! \n");
 	// kmt_ret = hsaKmtQueueSuspend(
