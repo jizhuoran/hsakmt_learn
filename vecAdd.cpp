@@ -124,6 +124,19 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
       }
 };
 
+class PCGetter {
+private:
+	std::map<uint64_t, void*> handle2address;
+public:
+	PCGetter() {
+		AMDDBGAPI_CHECK(amd_dbgapi_initialize (&dbgapi_callbacks));
+	}
+
+};
+
+
+
+
 int main(int argc, char ** argv) {
 
 	int SIZE = 1024*1024;
