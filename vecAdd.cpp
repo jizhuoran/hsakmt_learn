@@ -26,6 +26,15 @@ Sources: http://www.eriksmistad.no/getting-started-with-opencl-and-gpu-computing
 
 #define MAX_SOURCE_SIZE (0x100000)
 
+#define AMDDBGAPI_CHECK(condition) \
+  do { \
+    amd_dbgapi_status_t error = condition; \
+    if(error != AMD_DBGAPI_STATUS_SUCCESS) { \
+      std::cerr << "This is a error for AMDDBGAPI "<< error << " in " << __LINE__ << " in " << __FILE__ << std::endl;\
+      exit(1); \
+    } \
+  } while (0)
+  
 // #include <execinfo.h>
 // void print_trace(void) {
 //     char **strings;
@@ -59,7 +68,6 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
   /* get_os_pid.  */
   .get_os_pid =
       [] (amd_dbgapi_client_process_id_t client_process_id, pid_t *pid) {
-		printf("************ Call get_os_pid ! \n");
         *pid = getpid ();
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
@@ -70,13 +78,9 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
           const char *library_name, amd_dbgapi_shared_library_id_t library_id,
           amd_dbgapi_shared_library_state_t *library_state) {
         /* If the debug agent is loaded, then the ROCR is already loaded.   */
-		printf("************ Call enable_notify_shared_library ! \n");
-
-		std::cout << "The loaded address beforebefore " << (void*) library_id.handle << std::endl;
 		void* address = dlopen(library_name, RTLD_NOW);
         *library_state = AMD_DBGAPI_SHARED_LIBRARY_STATE_LOADED;
 		handle2address[library_id.handle] = address;
-		std::cout << "The loaded address is " << address  << std::endl;
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
@@ -84,7 +88,6 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
   .disable_notify_shared_library =
       [] (amd_dbgapi_client_process_id_t client_process_id,
           amd_dbgapi_shared_library_id_t library_id) {
-		printf("************ Call disable_notify_shared_library ! \n");
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
@@ -95,7 +98,6 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
           amd_dbgapi_global_address_t *address) {
         *address = reinterpret_cast<amd_dbgapi_global_address_t> (
             dlsym (handle2address[library_id.handle], symbol_name));
-		std::cout << "Call get_symbol_address " << "li is " << library_id.handle << " ret is " << *address << std::endl;
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
@@ -105,7 +107,6 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
           amd_dbgapi_shared_library_id_t shared_library_id,
           amd_dbgapi_global_address_t address,
           amd_dbgapi_breakpoint_id_t breakpoint_id) {
-		printf("************ Call insert_breakpoint ! \n");
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
@@ -113,14 +114,12 @@ static amd_dbgapi_callbacks_t dbgapi_callbacks = {
   .remove_breakpoint =
       [] (amd_dbgapi_client_process_id_t client_process_id,
           amd_dbgapi_breakpoint_id_t breakpoint_id) {
-		printf("************ Call remove_breakpoint ! \n");
         return AMD_DBGAPI_STATUS_SUCCESS;
       },
 
   /* log_message callback.  */
   .log_message =
       [] (amd_dbgapi_log_level_t level, const char *message) {
-		printf("************ Call log_message ! \n");
         std::cout << "rocm-dbgapi: " << message << std::endl;
       }
 };
@@ -252,9 +251,10 @@ int main(int argc, char ** argv) {
 	// msg.MemoryVA = memoryva;
 	// msg.DbgWaveMsg = wavemsg;
 
+	AMDDBGAPI_CHECK(amd_dbgapi_initialize (&dbgapi_callbacks));
 
-	amd_dbgapi_status_t dbg_ret = amd_dbgapi_initialize (&dbgapi_callbacks);
-	printf("The return value of amd_dbgapi_initialize is %d \n", dbg_ret);
+	// amd_dbgapi_status_t dbg_ret = amd_dbgapi_initialize (&dbgapi_callbacks);
+	// printf("The return value of amd_dbgapi_initialize is %d \n", dbg_ret);
 
 
 	// user_process_id.pid = getpid();
@@ -289,19 +289,28 @@ int main(int argc, char ** argv) {
 
 	amd_dbgapi_process_id_t process_id;
 	struct amd_dbgapi_client_process_s user_process_id {getpid()};
-	dbg_ret = amd_dbgapi_process_attach (&user_process_id, &process_id);
-	printf("The return value of amd_dbgapi_process_attach is %d \n", dbg_ret);
+	AMDDBGAPI_CHECK(amd_dbgapi_process_attach(&user_process_id, &process_id));
+	// dbg_ret = amd_dbgapi_process_attach (&user_process_id, &process_id);
+	// printf("The return value of amd_dbgapi_process_attach is %d \n", dbg_ret);
 
 
 	size_t wave_count;
 	amd_dbgapi_wave_id_t* waves;
-	dbg_ret = amd_dbgapi_process_wave_list (
-    	AMD_DBGAPI_PROCESS_NONE, &wave_count, &waves, NULL);
 
-	printf("The return value of amd_dbgapi_process_wave_list is %d and the value is %lu \n", dbg_ret, wave_count);
+	AMDDBGAPI_CHECK(amd_dbgapi_process_wave_list(
+    	AMD_DBGAPI_PROCESS_NONE, &wave_count, &waves, NULL));
+	std::cout << "LOG: the num of wave is " << wave_count << std::endl;
 
-	dbg_ret = amd_dbgapi_wave_stop (waves[0]);
-	printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
+
+	AMDDBGAPI_CHECK(amd_dbgapi_wave_stop (waves[0]));
+
+	// dbg_ret = amd_dbgapi_process_wave_list (
+    // 	AMD_DBGAPI_PROCESS_NONE, &wave_count, &waves, NULL);
+
+	// printf("The return value of amd_dbgapi_process_wave_list is %d and the value is %lu \n", dbg_ret, wave_count);
+
+	// dbg_ret = amd_dbgapi_wave_stop (waves[0]);
+	// printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
 
 	amd_dbgapi_dispatch_id_t dispatcher;
 	dbg_ret = amd_dbgapi_wave_get_info (
