@@ -325,6 +325,21 @@ int main(int argc, char ** argv) {
 
 	amd_dbgapi_architecture_id_t archid2;
 
+	enum elf_amdgpu_machine_t : uint32_t
+	{
+		EF_AMDGPU_MACH_NONE = 0x000,
+		EF_AMDGPU_MACH_AMDGCN_GFX900 = 0x02c,
+		EF_AMDGPU_MACH_AMDGCN_GFX902 = 0x02d,
+		EF_AMDGPU_MACH_AMDGCN_GFX904 = 0x02e,
+		EF_AMDGPU_MACH_AMDGCN_GFX906 = 0x02f,
+		EF_AMDGPU_MACH_AMDGCN_GFX908 = 0x030,
+		EF_AMDGPU_MACH_AMDGCN_GFX1010 = 0x033,
+		EF_AMDGPU_MACH_AMDGCN_GFX1011 = 0x034,
+		EF_AMDGPU_MACH_AMDGCN_GFX1012 = 0x035,
+		EF_AMDGPU_MACH_AMDGCN_GFX1030 = 0x036,
+		EF_AMDGPU_MACH_AMDGCN_GFX1031 = 0x037,
+	};
+
 	dbg_ret = amd_dbgapi_get_architecture(EF_AMDGPU_MACH_AMDGCN_GFX906, &archid2);
 	std::cout << "The return archid of amd_dbgapi_get_architecture is "
 		<< dbg_ret << " the arch is " << archid2.handle << std::endl;
