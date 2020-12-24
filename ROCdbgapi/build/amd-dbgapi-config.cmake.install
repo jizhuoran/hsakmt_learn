@@ -1,8 +1,0 @@
-
-# Derive absolute install prefix from config file path.
-get_filename_component(AMD_DBGAPI_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
-get_filename_component(AMD_DBGAPI_PREFIX "${AMD_DBGAPI_PREFIX}" PATH)
-get_filename_component(AMD_DBGAPI_PREFIX "${AMD_DBGAPI_PREFIX}" PATH)
-get_filename_component(AMD_DBGAPI_PREFIX "${AMD_DBGAPI_PREFIX}" PATH)
-
-include("${AMD_DBGAPI_PREFIX}/lib/cmake/amd-dbgapi/amd-dbgapi-targets.cmake")
