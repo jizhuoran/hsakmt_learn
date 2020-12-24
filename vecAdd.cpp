@@ -313,11 +313,11 @@ int main(int argc, char ** argv) {
 	std::cout << "The return of amd_dbgapi_wave_get_info is "
 		<< dbg_ret << " the PC is " << std::hex << PC << std::endl;
 
-	amd_dbgapi_global_address_t archid;
+	amd_dbgapi_architecture_id_t archid;
 	dbg_ret = amd_dbgapi_wave_get_info (
 		waves[0],
         AMD_DBGAPI_WAVE_INFO_ARCHITECTURE, 
-		sizeof(amd_dbgapi_global_address_t),
+		sizeof(amd_dbgapi_architecture_id_t),
         &archid);
 
 	std::cout << "The return archid of amd_dbgapi_wave_get_info is "
