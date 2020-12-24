@@ -260,9 +260,6 @@ int main(int argc, char ** argv) {
 	struct amd_dbgapi_client_process_s user_process_id;
 	user_process_id.pid = getpid();
 
-	dbg_ret = amd_dbgapi_process_attach (&user_process_id, &process_id);
-	printf("The return value of amd_dbgapi_process_attach is %d \n", dbg_ret);
-
 
 
 	fflush(stdout);
@@ -292,6 +289,8 @@ int main(int argc, char ** argv) {
 	// callback.log_message = &log_message;
 
 	
+	dbg_ret = amd_dbgapi_process_attach (&user_process_id, &process_id);
+	printf("The return value of amd_dbgapi_process_attach is %d \n", dbg_ret);
 
 
 	size_t wave_count;
