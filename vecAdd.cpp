@@ -321,7 +321,7 @@ int main(int argc, char ** argv) {
         &archid);
 
 	std::cout << "The return archid of amd_dbgapi_wave_get_info is "
-		<< dbg_ret << " the arch is " << std::hex << archid << std::endl;
+		<< dbg_ret << " the arch is " << archid.handle << std::endl;
 
 
 	// void* memorydecode = malloc(1024);
