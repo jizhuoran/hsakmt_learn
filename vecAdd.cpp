@@ -24,7 +24,7 @@ Sources: http://www.eriksmistad.no/getting-started-with-opencl-and-gpu-computing
 #include <map>
 
 
-// #define MAX_SOURCE_SIZE (0x100000)
+#define MAX_SOURCE_SIZE (0x100000)
 
 // #include <execinfo.h>
 // void print_trace(void) {
