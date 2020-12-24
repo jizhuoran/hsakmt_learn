@@ -323,6 +323,13 @@ int main(int argc, char ** argv) {
 	std::cout << "The return archid of amd_dbgapi_wave_get_info is "
 		<< dbg_ret << " the arch is " << archid.handle << std::endl;
 
+	amd_dbgapi_architecture_id_t archid2;
+
+	dbg_ret = amd_dbgapi_get_architecture(EF_AMDGPU_MACH_AMDGCN_GFX906, &archid2);
+	std::cout << "The return archid of amd_dbgapi_get_architecture is "
+		<< dbg_ret << " the arch is " << archid2.handle << std::endl;
+
+
 
 	void* memorydecode = malloc(1024);
 	char* instruction_text;
