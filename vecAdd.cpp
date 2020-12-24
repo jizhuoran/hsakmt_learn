@@ -24,26 +24,26 @@ Sources: http://www.eriksmistad.no/getting-started-with-opencl-and-gpu-computing
 #include <map>
 
 
-#define MAX_SOURCE_SIZE (0x100000)
+// #define MAX_SOURCE_SIZE (0x100000)
 
-#include <execinfo.h>
-void print_trace(void) {
-    char **strings;
-    size_t i, size;
-    enum Constexpr { MAX_SIZE = 1024 };
-    void *array[MAX_SIZE];
-    size = backtrace(array, MAX_SIZE);
-    strings = backtrace_symbols(array, size);
-    for (i = 0; i < size; i++)
-        printf("%s\n", strings[i]);
-    puts("");
-    free(strings);
-}
+// #include <execinfo.h>
+// void print_trace(void) {
+//     char **strings;
+//     size_t i, size;
+//     enum Constexpr { MAX_SIZE = 1024 };
+//     void *array[MAX_SIZE];
+//     size = backtrace(array, MAX_SIZE);
+//     strings = backtrace_symbols(array, size);
+//     for (i = 0; i < size; i++)
+//         printf("%s\n", strings[i]);
+//     puts("");
+//     free(strings);
+// }
 
 
 
-struct amd_dbgapi_client_process_s
-{
+
+struct amd_dbgapi_client_process_s {
 	pid_t pid;
 };
 
@@ -256,9 +256,8 @@ int main(int argc, char ** argv) {
 	amd_dbgapi_status_t dbg_ret = amd_dbgapi_initialize (&dbgapi_callbacks);
 	printf("The return value of amd_dbgapi_initialize is %d \n", dbg_ret);
 
-	amd_dbgapi_process_id_t process_id;
-	struct amd_dbgapi_client_process_s user_process_id;
-	user_process_id.pid = getpid();
+
+	// user_process_id.pid = getpid();
 
 
 
@@ -288,7 +287,8 @@ int main(int argc, char ** argv) {
 	// callback.remove_breakpoint = &remove_breakpoint;
 	// callback.log_message = &log_message;
 
-	
+	amd_dbgapi_process_id_t process_id;
+	struct amd_dbgapi_client_process_s user_process_id {getpid()};
 	dbg_ret = amd_dbgapi_process_attach (&user_process_id, &process_id);
 	printf("The return value of amd_dbgapi_process_attach is %d \n", dbg_ret);
 
