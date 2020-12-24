@@ -348,7 +348,7 @@ int main(int argc, char ** argv) {
 
 	void* memorydecode = malloc(1024);
 	char* instruction_text;
-	amd_dbgapi_size_t size = 16;
+	amd_dbgapi_size_t size = 4;
 	
 	dbg_ret = amd_dbgapi_disassemble_instruction (
     	archid,
