@@ -324,17 +324,17 @@ int main(int argc, char ** argv) {
 		<< dbg_ret << " the arch is " << archid.handle << std::endl;
 
 
-	// void* memorydecode = malloc(1024);
-	// char* instruction_text;
-	// amd_dbgapi_size_t size = 16;
+	void* memorydecode = malloc(1024);
+	char* instruction_text;
+	amd_dbgapi_size_t size = 16;
 	
-	// dbg_ret = amd_dbgapi_disassemble_instruction (
-    // 	amd_dbgapi_architecture_id_t architecture_id,
-    // 	value, size,
-    // 	memorydecode, &instruction_text,
-    // 	NULL, NULL);
-	// printf("The return value of amd_dbgapi_wave_stop is %d\n", dbg_ret);
-
+	dbg_ret = amd_dbgapi_disassemble_instruction (
+    	archid,
+    	value, &size,
+    	memorydecode, &instruction_text,
+    	NULL, NULL);
+	printf("The return value of amd_dbgapi_disassemble_instruction is %d\n", dbg_ret);
+	std::cout << "disassemble is " << size << "text is " << instruction_text << std::endl;
 	// hsaKmtDbgWavefrontControl(1, HSA_DBG_WAVEOP_KILL, HSA_DBG_WAVEMODE_BROADCAST_PROCESS, 1, &msg);
 
 	printf("We halt it!!! \n");
