@@ -30,6 +30,7 @@
 #include "utils.h"
 #include "wave.h"
 
+#include <iostream>
 #include <algorithm>
 #include <cstdint>
 #include <cstring>
@@ -2984,10 +2985,13 @@ amd_dbgapi_disassemble_instruction (
   if (!memory || !size)
     return AMD_DBGAPI_STATUS_ERROR_INVALID_ARGUMENT;
 
+  std::cout << "amd_dbgapi_disassemble_instruction 1" << std::endl;
   const architecture_t *architecture = architecture_t::find (architecture_id);
 
   if (!architecture)
     return AMD_DBGAPI_STATUS_ERROR_INVALID_ARCHITECTURE_ID;
+
+  std::cout << "amd_dbgapi_disassemble_instruction 2" << std::endl;
 
   if (!instruction_text)
     return architecture->instruction_size (memory, size);
@@ -2995,10 +2999,14 @@ amd_dbgapi_disassemble_instruction (
   std::string instruction_str;
   std::vector<amd_dbgapi_global_address_t> operands_vec;
 
+  std::cout << "amd_dbgapi_disassemble_instruction 3" << std::endl;
+
   amd_dbgapi_status_t status = architecture->disassemble_instruction (
       address, size, memory, instruction_str, operands_vec);
   if (status != AMD_DBGAPI_STATUS_SUCCESS)
     return status;
+
+  std::cout << "amd_dbgapi_disassemble_instruction 4" << std::endl;
 
   std::string operand_str;
   for (auto addr : operands_vec)
@@ -3030,6 +3038,8 @@ amd_dbgapi_disassemble_instruction (
       operand_str += sstream.str ();
     }
   instruction_str += operand_str;
+
+  std::cout << "amd_dbgapi_disassemble_instruction 5" << std::endl;
 
   /* Return the instruction text in client allocated memory.  */
   size_t mem_size = instruction_str.length () + 1;
